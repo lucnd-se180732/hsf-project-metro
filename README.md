@@ -1,14 +1,21 @@
-[![CI with GitHub Actions using Ant and JUnit | © 2025 by lucnd](https://github.com/nguyenluc2411/math-util/actions/workflows/ci-junit.yml/badge.svg)](https://github.com/nguyenluc2411/math-util/actions/workflows/ci-junit.yml)
+# Metro Ticket Booking System
 
-# Welcome to Math-Util Repository
-### You will find in this repo the following stuff:
-* The Math-Util library that offers multiple math function (a Java-based source code)
-* Unit Testing source code with JUnit framework
-* GitHub Actions to demonstrate the Continuous Integration (CI) technique
-* Regression Test
-* ...
+A web-based metro ticket booking simulation system using Spring Boot, Thymeleaf, and Google Maps.
 
-### Screenshots
-![DDT & TDD with JUnit](https://github.com/nguyenluc2411/math-util/blob/main/images/DDT%20with%20JUnit.png)
+## Features
 
-#### © 2025 lucnd
+- Display metro stations and routes on Google Maps
+- Select departure and arrival stations
+- Calculate distance, estimated travel time, and ticket price
+- Book tickets and store user information
+- Search available routes
+- Admin panel for managing stations, routes, and bookings (optional)
+
+## Technologies Used
+
+- Spring Boot (Backend)
+- Thymeleaf (Template Engine)
+- Google Maps JavaScript API
+- Java 17
+- Bootstrap (UI)
+- H2 / MySQL (Database)
