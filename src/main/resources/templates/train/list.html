@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách tàu đang hoạt động</title>
+</head>
+<body>
+<h2>🚆 Danh sách tàu Metro đang chạy</h2>
+
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+    <tr>
+        <th>Mã tàu</th>
+        <th>Tuyến</th>
+        <th>Chiều</th>
+        <th>Ga hiện tại</th>
+        <th>Giờ đến</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t : ${trains}">
+        <td th:text="${t.trainCode}">T1</td>
+        <td th:text="${t.routeName}">Tuyến số 1</td>
+        <td th:text="${t.direction}">Bến Thành → BXMD</td>
+        <td th:text="${t.currentStation}">Thủ Đức</td>
+        <td th:text="${#temporals.format(t.arrivalTime, 'HH:mm')}">06:45</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

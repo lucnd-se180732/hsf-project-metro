@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <title>Danh sách tuyến metro</title>
+</head>
+<body>
+<h1>Danh sách tuyến metro</h1>
+<table border="1">
+    <thead>
+    <tr><th>Mã</th><th>Tên</th><th>Màu</th><th>Mô tả</th><th></th></tr>
+    </thead>
+    <tbody>
+    <tr th:each="r : ${routes}">
+        <td th:text="${r.routeCode}"></td>
+        <td th:text="${r.name}"></td>
+        <td><span th:style="'background-color:' + ${r.colorHex}" style="padding:5px 20px;"></span></td>
+        <td th:text="${r.description}"></td>
+        <td><a th:href="@{'/routes/' + ${r.routeCode}}">Chi tiết</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
