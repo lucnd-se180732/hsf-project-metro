@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class TrainInstanceDTO {
     private String trainCode;
     private String routeName;
-    private String direction;         // "UP" hoặc "DOWN"
-    private String currentStation;    // Ga hiện tại
+    private String direction;
+    private String currentStation;
     private LocalDateTime arrivalTime;
 }

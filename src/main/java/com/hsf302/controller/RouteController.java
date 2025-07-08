@@ -52,7 +52,7 @@ public class RouteController {
         String stationsJson = mapper.writeValueAsString(stationDTOs);
 
         model.addAttribute("route", route);
-        model.addAttribute("stationsJson", stationsJson); // để dùng cho JS
+        model.addAttribute("stationsJson", stationsJson);
         model.addAttribute("stations", stations);
         return "route/detail";
     }

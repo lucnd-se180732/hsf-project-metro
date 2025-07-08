@@ -22,7 +22,12 @@ public class SampleDataConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // 1. Tạo tuyến
+
+        if (routeRepository.findByRouteCode("LINE1") != null) {
+            return;
+        }
+
+
         Route route1 = new Route();
         route1.setRouteCode("LINE1");
         route1.setName("Tuyến Metro Số 1");
@@ -30,7 +35,7 @@ public class SampleDataConfig implements CommandLineRunner {
         route1.setColorHex("#FF0000");
         routeRepository.save(route1);
 
-        // 2. Tạo danh sách 14 ga (3 ngầm + 11 trên cao)
+
         Station[] stations = new Station[]{
                 createStation("M01", "Bến Thành", "Q1, TP.HCM", 0.0, 1, route1, 10.770809, 106.697543),
                 createStation("M02", "Nhà Hát Thành Phố", "Q1, TP.HCM", 0.4, 2, route1, 10.775292, 106.701838),
@@ -50,7 +55,7 @@ public class SampleDataConfig implements CommandLineRunner {
 
         stationRepository.saveAll(Arrays.asList(stations));
 
-        // 3. Tạo 9 tàu, luân phiên đi xuôi và ngược, mỗi chuyến cách nhau 15 phút
+
         int numTrains = 9;
         LocalDateTime startTime = LocalDateTime.of(2025, 7, 1, 6, 30);
 
@@ -62,7 +67,7 @@ public class SampleDataConfig implements CommandLineRunner {
             train.setRoute(route1);
             trainRepository.save(train);
 
-            // Chiều chạy: chẵn đi xuôi, lẻ đi ngược
+
             boolean reverse = i % 2 != 0;
             Station[] stationOrder = reverse ? reverseArray(stations) : stations;
 
@@ -74,8 +79,8 @@ public class SampleDataConfig implements CommandLineRunner {
                 schedule.setTrain(train);
                 schedule.setStation(stationOrder[j]);
                 schedule.setStationOrder(j + 1);
-                schedule.setArrivalTime(baseTime.plusMinutes(j * 4));
-                schedule.setDepartureTime(baseTime.plusMinutes(j * 4 + 2));
+                schedule.setArrivalTime(baseTime.plusMinutes((long)j * 4));
+                schedule.setDepartureTime(baseTime.plusMinutes((long) j * 4 + 2));
                 schedule.setStart(j == 0);
                 schedule.setEnd(j == stationOrder.length - 1);
                 schedules.add(schedule);
