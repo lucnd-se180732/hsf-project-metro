@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>Trang chủ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        .hero {
+            position: relative;
+            height: 400px;
+            background: url('/images/home-metro.webp') center center / cover no-repeat;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.45);
+            z-index: 0;
+        }
+
+        .hero > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .btn-cta {
+            margin-top: 1.5rem;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            background-color: #ffc107;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        .hero .btn-cta:hover {
+            background-color: #e0a800;
+            color: #fff;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .metro-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .metro-card:hover {
+            box-shadow: 0 10px 25px rgba(0,123,255,0.3);
+            transform: translateY(-5px);
+        }
+
+        .metro-card h4 {
+            margin-bottom: 1rem;
+            color: #003b73;
+        }
+
+        .metro-card p {
+            font-size: 1.05rem;
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+
+        .metro-card .student-icon {
+            font-size: 2.5rem;
+            color: #17a2b8;
+            margin-bottom: 1rem;
+        }
+
+        .metro-card .btn-highlight {
+            background-color: #17a2b8;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .metro-card .btn-highlight:hover {
+            background-color: #138496;
+            color: #fff;
+        }
+
+        .map-container {
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        @media (max-width: 767px) {
+            .hero {
+                height: 300px;
+                padding: 0 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="hero">
+        <h1 class="display-4 fw-bold">Chào mừng đến với Metro HCM</h1>
+        <p class="lead">Hành trình hiện đại – Kết nối tương lai</p>
+        <a href="/routes/LINE1" class="btn-cta">Xem tuyến đường</a>
+    </div>
+
+    <section class="container info-section text-center py-5">
+        <h2 class="section-title">Thông tin nổi bật</h2>
+        <div class="row mt-4">
+            <div class="col-md-4 mb-4">
+                <div class="metro-card">
+                    <h4>Tuyến số 1</h4>
+                    <p>Bến Thành - Suối Tiên</p>
+                    <p>Dài 19.7km, 14 ga</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="metro-card">
+                    <h4>Thời gian hoạt động</h4>
+                    <p>5:00 - 23:00 mỗi ngày</p>
+                    <p>Tần suất 5-10 phút/chuyến</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="metro-card">
+                    <h4>Tiện ích</h4>
+                    <p>Wifi miễn phí, điều hòa, an ninh 24/7</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 offset-md-3 mb-4">
+                <div class="metro-card">
+                    <div class="student-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h4>Xác minh sinh viên</h4>
+                    <p>Nhận ưu đãi giá vé Metro khi xác minh sinh viên.</p>
+                    <a href="/verify-student-form" class="btn btn-highlight mt-2">Xác minh ngay</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container text-center pb-5">
+        <h2 class="section-title mb-4">Bản đồ tuyến Metro</h2>
+        <div class="map-container">
+            <img src='/images/map-metro.jpg'
+                 class="img-fluid rounded" alt="Bản đồ metro">
+        </div>
+    </section>
+</main>
+</body>
+</html>

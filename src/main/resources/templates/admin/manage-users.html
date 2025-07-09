@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout-admin}">
+<head>
+  <title>Quản lý người dùng</title>
+</head>
+<body>
+<main layout:fragment="content">
+  <div class="container py-4">
+    <h2 class="mb-4">Danh sách người dùng</h2>
+
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Họ tên</th>
+        <th>Vai trò</th>
+        <th>Sinh viên</th>
+        <th>Trạng thái</th>
+        <th>Thao tác</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="u : ${users}">
+        <td th:text="${u.id}"></td>
+        <td th:text="${u.email}"></td>
+        <td th:text="${u.fullName}"></td>
+        <td th:text="${u.role}"></td>
+        <td>
+  <span th:if="${u.student}" class="text-success">
+    ✓
+  </span>
+          <span th:unless="${u.student}" class="text-danger">
+    ✗
+  </span>
+        </td>
+
+
+
+        <td>
+          <span th:text="${u.active} ? 'Hoạt động' : 'Vô hiệu hóa'"
+                th:classappend="${u.active} ? 'text-success' : 'text-danger'"></span>
+        </td>
+        <td>
+          <form th:action="@{/admin/toggle-user-status/{id}(id=${u.id})}" method="post">
+            <button type="submit"
+                    th:classappend="${u.active} ? 'btn btn-sm btn-danger' : 'btn btn-sm btn-success'"
+                    th:text="${u.active} ? 'Khóa' : 'Mở khóa'">
+            </button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+</body>
+</html>

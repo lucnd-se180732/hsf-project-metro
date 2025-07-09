@@ -39,6 +39,7 @@ public class AuthServiceImpl implements AuthService {
         });
 
         session.setAttribute("user", user);
+        session.setAttribute("role", user.getRole().name());
     }
 
 

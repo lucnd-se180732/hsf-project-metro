@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          layout:decorate="~{layouts/layout-admin}">
+
+    <head>
+        <title>Duyệt xác minh sinh viên</title>
+        <th:block layout:fragment="styles">
+            <style>
+                .verification-card {
+                    transition: all 0.3s ease;
+                }
+                .verification-card:hover {
+                    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+                }
+                .status-badge {
+                    font-size: 0.875rem;
+                    padding: 0.5rem 0.75rem;
+                    font-weight: 500;
+                }
+                .img-preview {
+                    max-width: 100%;
+                    height: auto;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                }
+                .table th {
+                    background-color: #f8f9fa;
+                }
+                .modal-header {
+                    background-color: #f8f9fa;
+                    border-bottom: 2px solid #dee2e6;
+                }
+                .detail-list dt {
+                    font-weight: 600;
+                    color: #495057;
+                }
+                .action-buttons {
+                    gap: 0.5rem;
+                }
+            </style>
+        </th:block>
+    </head>
+
+    <body>
+    <main layout:fragment="content">
+        <div class="container-fluid py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h3 mb-0">Danh sách xác minh sinh viên</h2>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-secondary" onclick="window.print()">
+                        <i class="fas fa-print me-1"></i> In danh sách
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Form -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <form method="get" th:action="@{/admin/verifications}" class="row g-3">
+                        <div class="col-md-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="fullName" name="fullName"
+                                       th:value="${param.fullName}" placeholder="Nhập họ tên">
+                                <label for="fullName">Họ và tên</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="studentCode" name="studentCode"
+                                       th:value="${param.studentCode}" placeholder="Nhập MSSV">
+                                <label for="studentCode">Mã số sinh viên</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-floating">
+                                <select class="form-select" id="status" name="status" th:value="${param.status}">
+                                    <option value="" th:selected="${param.status == null || param.status.isEmpty()}">Tất cả trạng thái</option>
+                                    <option value="PENDING" th:selected="${#strings.toString(param.status) == 'PENDING'}">Đang chờ</option>
+                                    <option value="APPROVED" th:selected="${#strings.toString(param.status) == 'APPROVED'}">Đã duyệt</option>
+                                    <option value="REJECTED" th:selected="${#strings.toString(param.status) == 'REJECTED'}">Từ chối</option>
+                                </select>
+                                <label for="status">Trạng thái</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-center">
+                            <button type="submit" class="btn btn-primary me-2">
+                                <i class="fas fa-search me-1"></i> Tìm kiếm
+                            </button>
+                            <a class="btn btn-outline-secondary" th:href="@{/admin/verifications}">
+                                <i class="fas fa-redo me-1"></i> Đặt lại
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results Table -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Họ và tên</th>
+                                <th scope="col">MSSV</th>
+                                <th scope="col">Trạng thái</th>
+                                <th scope="col">Ngày nộp</th>
+                                <th scope="col">Hành động</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="v, i : ${verifications}">
+                                <td th:text="${i.index + 1}">1</td>
+                                <td th:text="${v.user != null ? v.user.email : 'Không có'}">email</td>
+                                <td th:text="${v.fullName}">Họ tên</td>
+                                <td th:text="${v.studentCode}">MSSV</td>
+                                <td>
+                                    <span th:if="${v.status.name() == 'APPROVED'}"
+                                          class="badge rounded-pill bg-success d-inline-flex align-items-center">
+                                        <i class="fas fa-check-circle me-1"></i> Đã xác nhận
+                                    </span>
+                                    <span th:if="${v.status.name() == 'REJECTED'}"
+                                          class="badge rounded-pill bg-danger d-inline-flex align-items-center">
+                                        <i class="fas fa-times-circle me-1"></i> Từ chối
+                                    </span>
+                                    <span th:if="${v.status.name() == 'PENDING'}"
+                                          class="badge rounded-pill bg-warning d-inline-flex align-items-center">
+                                        <i class="fas fa-clock me-1"></i> Đang chờ
+                                    </span>
+                                </td>
+                                <td th:text="${#temporals.format(v.submittedAt, 'dd/MM/yyyy HH:mm')}">01/01/2025</td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-sm"
+                                            th:data-id="${v.id}"
+                                            onclick="showDetail(this.getAttribute('data-id'))">
+                                        <i class="fas fa-eye me-1"></i> Chi tiết
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail Modal -->
+            <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <i class="fas fa-id-card me-2"></i>Chi tiết xác minh
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body" id="modal-body-content">
+                            <!-- Content will be inserted by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden Detail Templates -->
+            <div th:each="v : ${verifications}" th:id="'detail-' + ${v.id}" style="display:none;">
+                <dl class="row detail-list">
+                    <dt class="col-sm-4">Họ và tên:</dt>
+                    <dd class="col-sm-8" th:text="${v.fullName}">--</dd>
+
+                    <dt class="col-sm-4">MSSV:</dt>
+                    <dd class="col-sm-8" th:text="${v.studentCode}">--</dd>
+
+                    <dt class="col-sm-4">Ngày sinh:</dt>
+                    <dd class="col-sm-8" th:text="${#temporals.format(v.dob, 'dd/MM/yyyy')}">--</dd>
+
+                    <dt class="col-sm-4">CCCD:</dt>
+                    <dd class="col-sm-8" th:text="${v.idNumber}">--</dd>
+
+                    <dt class="col-sm-4">Trường:</dt>
+                    <dd class="col-sm-8" th:text="${v.university}">--</dd>
+
+                    <dt class="col-sm-4">Ảnh thẻ SV (trước):</dt>
+                    <dd class="col-sm-8">
+                        <img th:src="${v.studentCardFrontImageUrl}" class="img-preview" alt="Mặt trước thẻ sinh viên"/>
+                    </dd>
+
+                    <dt class="col-sm-4">Ảnh thẻ SV (sau):</dt>
+                    <dd class="col-sm-8">
+                        <img th:src="${v.studentCardBackImageUrl}" class="img-preview" alt="Mặt sau thẻ sinh viên"/>
+                    </dd>
+
+                    <dt class="col-sm-4">Trạng thái:</dt>
+                    <dd class="col-sm-8">
+                        <span th:if="${v.status.name() == 'APPROVED'}" class="badge bg-success">
+                            <i class="fas fa-check-circle me-1"></i> Đã xác nhận
+                        </span>
+                        <span th:if="${v.status.name() == 'REJECTED'}" class="badge bg-danger">
+                            <i class="fas fa-times-circle me-1"></i> Từ chối
+                        </span>
+                        <span th:if="${v.status.name() == 'PENDING'}" class="badge bg-warning">
+                            <i class="fas fa-clock me-1"></i> Đang chờ
+                        </span>
+                    </dd>
+                </dl>
+
+                <div th:if="${v.status.name() == 'PENDING'}" class="d-flex justify-content-end gap-2">
+                    <form th:action="@{'/admin/verifications/' + ${v.id} + '/approve'}" method="post">
+                        <button class="btn btn-success">
+                            <i class="fas fa-check me-1"></i> Duyệt
+                        </button>
+                    </form>
+                    <form th:action="@{'/admin/verifications/' + ${v.id} + '/reject'}" method="post">
+                        <button class="btn btn-danger">
+                            <i class="fas fa-times me-1"></i> Từ chối
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <th:block layout:fragment="scripts">
+        <script th:inline="javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                window.showDetail = function(id) {
+                    try {
+                        const detailDiv = document.getElementById("detail-" + id);
+                        const modalBody = document.getElementById("modal-body-content");
+
+                        if (!detailDiv || !modalBody) {
+                            console.error('Required elements not found');
+                            return;
+                        }
+
+                        modalBody.innerHTML = detailDiv.innerHTML;
+                        const modal = new bootstrap.Modal(document.getElementById("detailModal"));
+                        modal.show();
+                    } catch (error) {
+                        console.error('Error showing detail:', error);
+                    }
+                };
+            });
+        </script>
+    </th:block>
+
+    </body>
+    </html>

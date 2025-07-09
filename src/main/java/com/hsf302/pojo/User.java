@@ -18,13 +18,19 @@ public class User {
 
     private String email;
 
+    @Column(columnDefinition = ("NVARCHAR(100)"))
     private String fullName;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private String identificationNumber;
+
+    @Column(name = "is_student")
     private boolean isStudent = false;
 
+    @Column(name = "is_active")
     private boolean isActive = true;
+
 
 }

@@ -36,13 +36,13 @@ public class TrainController {
 
             for (TrainStationSchedule s : schedules) {
                 if (!s.getArrivalTime().isAfter(now)) {
-                    current = s; // ga đã đến gần nhất
+                    current = s;
                 } else {
                     break;
                 }
             }
 
-            if (current == null) continue; // chưa khởi hành
+            if (current == null) continue;
 
             String direction = schedules.get(0).getStation().getName() + " → " +
                     schedules.get(schedules.size() - 1).getStation().getName();
