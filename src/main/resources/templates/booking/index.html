@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chọn loại vé</title>
+    <link rel="stylesheet" href="/css/booking.css">
+</head>
+<body>
+<h1>Chọn loại vé</h1>
+<section class="choose-ticket-wrapper">
+<div class="ticket-types">
+    <!-- Chỉ tạo card nếu KHÔNG phải vé lượt -->
+    <div th:each="type : ${ticketTypes}" class="ticket-card">
+
+        <!-- Nếu là vé SINGLE -->
+        <a th:if="${type.name() == 'SINGLE'}"
+           th:href="@{/booking/single}">
+            <div class="ticket-icon"></div>
+            <h3 th:text="${type.displayName}">Vé lượt</h3>
+        </a>
+
+        <!-- Ngược lại (tức là không phải SINGLE) -->
+        <a th:unless="${type.name() == 'SINGLE'}"
+           th:href="@{/booking/type/{type}(type=${type.name()})}">
+            <div class="ticket-icon"></div>
+            <h3 th:text="${type.displayName}">Vé khác</h3>
+        </a>
+
+    </div>
+    <div class="banner"></div>
+</div>
+</section>
+
+</body>
+</html>

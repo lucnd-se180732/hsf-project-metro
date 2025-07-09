@@ -18,4 +18,9 @@ public class StationServiceImpl implements StationService {
     public List<Station> findByRouteOrderByStationOrder(Route route) {
         return stationRepository.findByRouteOrderByStationOrderAsc(route);
     }
+
+    @Override
+    public Station findByName(String name) {
+        return stationRepository.findByName(name);
+    }
 }

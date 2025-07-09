@@ -1,0 +1,95 @@
+/* ---------------------------------------
+  📄 payment-history.html — Lịch sử giao dịch
+---------------------------------------- */
+h1 {
+    text-align: center;
+    color: #00796b;
+    margin-bottom: 24px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 95%;
+    margin: 0 auto 40px auto;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+th, td {
+    padding: 16px 12px;
+    text-align: left;
+    font-size: 15px;
+    color: #333;
+    border-bottom: 1px solid #e0f0f5;
+}
+
+th {
+    background-color: #00bcd4;
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #e0f7fa;
+}
+
+strong {
+    color: #00695c;
+}
+
+td span {
+    font-weight: bold;
+}
+
+/* ✅ Trạng thái giao dịch: thay vì :contains(), dùng class */
+.status-success {
+    color: #2e7d32;
+}
+
+.status-failed {
+    color: #d32f2f;
+}
+
+/* ✅ Giao dịch mở rộng dòng loại vé */
+tr td[colspan="7"] {
+    background-color: #f1fcfc;
+    font-style: italic;
+    color: #004d40;
+}
+
+/* ---------------------------------------
+  📄 Pagination
+---------------------------------------- */
+.pagination {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.pagination a {
+    display: inline-block;
+    background-color: #00acc1;
+    color: white;
+    padding: 8px 14px;
+    margin: 0 6px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #0097a7;
+}
+
+.pagination a.active {
+    background-color: #00796b;
+}

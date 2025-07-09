@@ -28,6 +28,6 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         authService.handleOAuthLogin(oauthUser, session);
 
-        response.sendRedirect("/routes");
+        response.sendRedirect("/booking");
     }
 }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Xác nhận mua vé lượt</title>
+    <link rel="stylesheet" href="/css/booking.css">
+</head>
+<body>
+<h2>Xác nhận thông tin vé lượt</h2>
+
+<div class="ticket-detail-container"> <!-- ⬅️ Thêm dòng này -->
+    <div class="ticket-detail">
+        <p><strong>Loại vé:</strong> <span th:text="${ticket.ticketType.displayName}">SINGLE</span></p>
+        <p><strong>Ga đi:</strong> <span th:text="${ticket.departureStation}"></span></p>
+        <p><strong>Ga đến:</strong> <span th:text="${ticket.arrivalStation}"></span></p>
+        <p><strong>Giá vé:</strong> <span th:text="${ticket.price}"></span> VND</p>
+        <p><strong>Mô tả:</strong></p>
+        <p th:text="${ticket.description}"></p>
+        <p><strong>Lưu ý:</strong></p>
+        <p th:text="${ticket.note}"></p>
+    </div>
+
+    <form method="post" th:action="@{/payment/vnpay}">
+        <input type="hidden" name="ticketType" th:value="${ticket.ticketType}" />
+        <input type="hidden" name="startDate" th:value="${ticket.startDate}" />
+        <input type="hidden" name="endDate" th:value="${ticket.endDate}" />
+        <input type="hidden" name="from" th:value="${ticket.departureStation}" />
+        <input type="hidden" name="to" th:value="${ticket.arrivalStation}" />
+        <input type="hidden" name="price" th:value="${ticket.price}" />
+        <input type="hidden" name="description" th:value="${ticket.description}" />
+        <input type="hidden" name="note" th:value="${ticket.note}" />
+        <button type="submit" class="payment-button">Thanh toán qua VNPay</button>
+    </form>
+</div> <!-- ⬅️ Đóng div mới -->
+</body>
+
+</html>

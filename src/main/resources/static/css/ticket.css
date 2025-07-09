@@ -1,0 +1,205 @@
+/* === TOÀN TRANG === */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #ffffff);
+    color: #2f3640;
+    padding: 20px;
+    margin: 0;
+}
+
+/* === TIÊU ĐỀ === */
+h1 {
+    text-align: center;
+    color: #00796b;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+/* === DANH SÁCH VÉ === */
+.ticket-list-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* === THẺ VÉ === */
+.ticket-card {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px;
+    background: linear-gradient(135deg, #ffffff, #e0f7ff);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #d0eaff;
+    flex-wrap: wrap;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.ticket-card:hover {
+    transform: translateY(-4px);
+}
+
+/* === THÔNG TIN VÉ === */
+.ticket-info {
+    flex: 2;
+}
+
+.ticket-info h2 {
+    font-size: 20px;
+    color: #0097e6;
+    margin-bottom: 10px;
+}
+
+.ticket-info p {
+    margin-bottom: 6px;
+    color: #2f3640;
+    font-size: 15px;
+}
+
+.ticket-info span {
+    font-weight: 500;
+    color: #192a56;
+}
+
+/* === TRẠNG THÁI === */
+.ticket-status {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.status-valid {
+    color: #2e7d32;
+}
+
+.status-invalid {
+    color: #d32f2f;
+}
+
+/* === QR VÀ NÚT === */
+.ticket-actions {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.ticket-actions img {
+    width: 100px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.ticket-actions button {
+    background-color: #44bd32;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.ticket-actions button:hover {
+    background-color: #4cd137;
+}
+/*phan trang */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+}
+
+.pagination a {
+    padding: 8px 14px;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+    pointer-events: none;
+}
+/* === KẾT QUẢ KIỂM TRA VÉ === */
+.ticket-check-result {
+    max-width: 700px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #ffffff, #e0f7ff);
+    border: 1px solid #d0eaff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.ticket-check-result p {
+    margin: 12px 0;
+    color: #2f3640;
+}
+
+.ticket-check-result strong {
+    color: #00796b;
+    font-weight: bold;
+}
+
+.ticket-check-result span {
+    color: #192a56;
+    font-weight: 500;
+}
+
+.ticket-check-result a {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #00acc1;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.ticket-check-result a:hover {
+    background-color: #007c91;
+}
+
+
+
+/* === MOBILE RESPONSIVE === */
+@media screen and (max-width: 768px) {
+    .ticket-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ticket-actions {
+        align-items: flex-start;
+        margin-top: 12px;
+    }
+
+    .ticket-actions img {
+        margin: 10px 0;
+    }
+}
+

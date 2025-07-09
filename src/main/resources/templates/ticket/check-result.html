@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kết quả kiểm tra vé</title>
+    <link rel="stylesheet" href="/css/ticket.css">
+</head>
+<body>
+<h1 th:text="${status}">Trạng thái vé</h1>
+
+<div class="ticket-check-result" th:if="${ticket != null}">
+    <p>🎟️ Loại vé: <span th:text="${ticket.ticketType.displayName}"></span></p>
+
+    <!-- ✅ Chỉ hiển thị khi là vé lượt -->
+    <p th:if="${ticket.ticketType.name() == 'SINGLE'}">
+        🚉 Ga đi: <span th:text="${ticket.departureStation}"></span> →
+        <span th:text="${ticket.arrivalStation}"></span>
+    </p>
+
+    <p>
+        📅 Hiệu lực:
+        <span th:text="${#temporals.format(ticket.startDate, 'dd/MM/yyyy HH:mm')}"></span>
+        đến
+        <span th:text="${#temporals.format(ticket.endDate, 'dd/MM/yyyy HH:mm')}"></span>
+    </p>
+
+    <p>📝 Mô tả: <span th:text="${ticket.description}"></span></p>
+    <p>📌 Lưu ý: <span th:text="${ticket.note}"></span></p>
+</div>
+
+<a href="/tickets/check-ticket/camera">🔁 Quét vé khác</a>
+</body>
+</html>

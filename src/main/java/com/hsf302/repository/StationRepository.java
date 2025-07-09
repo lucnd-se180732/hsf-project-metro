@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface StationRepository extends JpaRepository<Station, Long> {
     List<Station> findByRouteOrderByStationOrderAsc(Route route);
+    Station findByName(String name);
 }

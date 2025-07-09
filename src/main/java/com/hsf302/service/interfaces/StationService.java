@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface StationService {
     List<Station> findByRouteOrderByStationOrder(Route route);
+    Station findByName(String name);
 }
