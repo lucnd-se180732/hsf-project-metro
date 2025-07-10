@@ -26,7 +26,7 @@ public class SecurityConfig {
                                 "/images/**",
                                 "/home"
                         ).permitAll()
-                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/admin/**","/tickets/check-ticket/camera").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2

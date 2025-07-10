@@ -22,6 +22,8 @@ public class Ticket {
     private String qrCode;
     private BigDecimal price;
     private LocalDateTime activatedAt;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
 
     @ManyToOne
@@ -60,6 +62,7 @@ public class Ticket {
         this.arrivalStation = arrivalStation;
         this.description = description;
         this.note = note;
+
     }
 
     public String getStatus() {

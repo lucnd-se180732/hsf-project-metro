@@ -1,35 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Chọn loại vé</title>
-    <link rel="stylesheet" href="/css/booking.css">
+    <title layout:fragment="title">Chọn loại vé</title>
+
+    <!-- Thêm CSS riêng -->
+    <th:block layout:fragment="styles">
+        <link rel="stylesheet" href="/css/booking.css">
+    </th:block>
 </head>
-<body>
-<h1>Chọn loại vé</h1>
-<section class="choose-ticket-wrapper">
-<div class="ticket-types">
-    <!-- Chỉ tạo card nếu KHÔNG phải vé lượt -->
-    <div th:each="type : ${ticketTypes}" class="ticket-card">
 
-        <!-- Nếu là vé SINGLE -->
-        <a th:if="${type.name() == 'SINGLE'}"
-           th:href="@{/booking/single}">
-            <div class="ticket-icon"></div>
-            <h3 th:text="${type.displayName}">Vé lượt</h3>
-        </a>
+<body> <!-- ✅ Bắt buộc cần body khi dùng layout:fragment -->
 
-        <!-- Ngược lại (tức là không phải SINGLE) -->
-        <a th:unless="${type.name() == 'SINGLE'}"
-           th:href="@{/booking/type/{type}(type=${type.name()})}">
-            <div class="ticket-icon"></div>
-            <h3 th:text="${type.displayName}">Vé khác</h3>
-        </a>
+<div layout:fragment="content">
+    <div class="booking-page">
+        <h1>Chọn loại vé</h1>
 
+        <section class="choose-ticket-wrapper">
+            <div class="ticket-types">
+                <div th:each="type : ${ticketTypes}" class="ticket-card">
+                    <a th:if="${type.name() == 'SINGLE'}" th:href="@{/booking/single}">
+                        <div class="ticket-icon"></div>
+                        <h3 th:text="${type.displayName}">Vé lượt</h3>
+                    </a>
+                    <a th:unless="${type.name() == 'SINGLE'}" th:href="@{/booking/type/{type}(type=${type.name()})}">
+                        <div class="ticket-icon"></div>
+                        <h3 th:text="${type.displayName}">Vé khác</h3>
+                    </a>
+                </div>
+                <div class="banner"></div>
+            </div>
+        </section>
     </div>
-    <div class="banner"></div>
 </div>
-</section>
 
+<th:block layout:fragment="scripts">
+    <!-- JS nếu có -->
+</th:block>
 </body>
 </html>

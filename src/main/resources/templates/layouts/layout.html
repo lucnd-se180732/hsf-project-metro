@@ -100,13 +100,16 @@
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item"><a class="nav-link" href="/home">Trang chủ</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/routes/LINE1">Tuyến đường</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/map">Bản đồ</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/contact">Liên hệ</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/booking">Mua vé</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/tickets">Vé của tôi</a></li>
+                                <li class="nav-item"><a class="nav-link" href="payment/history">Lịch sử giao dịch</a></li>
+
 
                                 <!-- Nếu đã đăng nhập -->
                                 <li class="nav-item dropdown" th:if="${#authorization.expression('isAuthenticated()')}">

@@ -93,3 +93,28 @@ tr td[colspan="7"] {
 .pagination a.active {
     background-color: #00796b;
 }
+/* Đảm bảo toàn bộ content không dính sát */
+body {
+    padding: 0px;
+}
+
+/* ✅ Cho h1 đồng nhất layout */
+h1 {
+    text-align: center;
+    color: #00796b;
+    margin-bottom: 24px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: 28px;
+}
+
+/* ✅ Canh giữa đoạn "Chưa có giao dịch nào" */
+.no-payment-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh; /* Chiều cao tối thiểu để căn giữa theo chiều dọc */
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+}
+

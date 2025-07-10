@@ -44,12 +44,12 @@ public class TicketController {
     @GetMapping
     public String listUserTickets(
             Model model,
-            OAuth2AuthenticationToken authentication,
+            Principal principal,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "1") int size,
             @RequestParam(defaultValue = "active") String type // active, inactive, expired
     ) {
-        String email = authentication.getPrincipal().getAttribute("email");
+        String email = principal.getName();
         User user = userService.findByEmail(email);
 
         List<Ticket> allTickets = ticketRepository.findByUser(user);
@@ -58,11 +58,32 @@ public class TicketController {
         LocalDateTime now = LocalDateTime.now();
 
         for (Ticket ticket : allTickets) {
+
+            if (ticket.getCreatedAt() == null) continue;
             // Tự động sinh QR nếu thiếu
             if (ticket.getQrCode() == null || ticket.getQrCode().isEmpty()) {
                 String qr = qrUtil.generate("TICKET#" + ticket.getId());
                 ticket.setQrCode(qr);
                 ticketRepository.save(ticket);
+            }
+
+            // 👉 Tự động kích hoạt nếu quá thời gian
+            if (ticket.getActivatedAt() == null && ticket.getCreatedAt() != null) {
+                long daysSincePurchase = java.time.Duration.between(ticket.getCreatedAt(), now).toDays();
+                long minutesSincePurchase = java.time.Duration.between(ticket.getCreatedAt(), now).toMinutes();
+
+
+                boolean shouldActivate = switch (ticket.getTicketType()) {
+                    case ONE_DAY -> daysSincePurchase >= 3;
+                    case THREE_DAY -> daysSincePurchase >= 90;
+                    case MONTHLY, STUDENT_MONTHLY -> daysSincePurchase >= 180;
+                    default -> false;
+                };
+
+                if (shouldActivate) {
+                    ticket.activate();
+                    ticketRepository.save(ticket);
+                }
             }
 
             boolean isExpired = ticket.getEndDate() != null && now.isAfter(ticket.getEndDate());
@@ -81,6 +102,7 @@ public class TicketController {
                 }
             }
         }
+
 
         // Sắp vé mới nhất lên đầu
         filtered.sort(Comparator.comparing(Ticket::getId).reversed());
@@ -106,9 +128,9 @@ public class TicketController {
 
 
     @PostMapping("/activate/{id}")
-    public String activateTicket(@PathVariable Long id, OAuth2AuthenticationToken authentication) {
+    public String activateTicket(@PathVariable Long id, Principal principal) {
         // ✅ Lấy đúng email từ Google OAuth2
-        String email = authentication.getPrincipal().getAttribute("email");
+        String email = principal.getName();
         User user = userService.findByEmail(email);
 
         Optional<Ticket> optionalTicket = ticketRepository.findById(id);

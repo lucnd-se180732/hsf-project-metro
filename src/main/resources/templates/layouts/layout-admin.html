@@ -62,6 +62,10 @@
                th:classappend="${currentUri != null and currentUri.startsWith('/admin/users')} ? 'active'">
                 <i class="fas fa-users me-2"></i> Quản lý người dùng
             </a>
+            <a th:href="@{/tickets/check-ticket/camera}"
+               th:classappend="${currentUri != null and currentUri.startsWith('/admin/ticket')} ? 'active'">
+                <i class="fas fa-ticket-alt me-2"></i> Xoát vé
+            </a>
 
             <a th:href="@{/admin/contact}"
                th:classappend="${currentUri != null and currentUri.startsWith('/admin/contact')} ? 'active'">

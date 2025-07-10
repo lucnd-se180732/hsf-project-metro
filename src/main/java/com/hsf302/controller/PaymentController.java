@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
@@ -58,6 +59,7 @@ public class PaymentController {
         ticket.setDescription(description);
         ticket.setNote(note);
         ticket.setUsed(false);
+
 
         // ✅ Phân biệt rõ xử lý giữa vé SINGLE và các loại vé khác
         if (ticketType == TicketType.SINGLE) {
@@ -103,47 +105,67 @@ public class PaymentController {
     public String vnpayReturn(@RequestParam Map<String, String> params, HttpSession session) {
         boolean isSuccess = vnPayService.verifyPayment(params);
 
-        if (isSuccess) {
-            Ticket ticket = (Ticket) session.getAttribute("pendingTicket");
-
-            // Nếu không có ticket hoặc ticket null thì redirect lỗi
-            if (ticket == null || ticket.getId() == null) {
-                return "redirect:/booking/failed";
-            }
-
-            // ✅ Check lại từ DB để chắc chắn
-            Ticket freshTicket = ticketRepository.findById(ticket.getId()).orElse(null);
-            if (freshTicket == null) {
-                return "redirect:/booking/failed";
-            }
-
-            // Nếu vé đã từng được thanh toán, thì không làm lại nữa
-            Optional<Payment> existing = paymentService.findByTicket(freshTicket);
-            if (existing.isPresent()) {
-                return "redirect:/booking/success"; // hoặc failed nếu bạn muốn ngăn
-            }
-
-            // ✅ Gán QR & save
-            String qrContent = "TICKET#" + freshTicket.getId();
-            String qrCodeBase64 = QRUtil.generate(qrContent);
-            freshTicket.setQrCode(qrCodeBase64);
-            ticketRepository.save(freshTicket);
-
-            return "redirect:/booking/success";
-        } else {
+        if (!isSuccess) {
             return "redirect:/booking/failed";
         }
+
+        Ticket sessionTicket = (Ticket) session.getAttribute("pendingTicket");
+
+        // ⚠ Kiểm tra vé từ session
+        if (sessionTicket == null || sessionTicket.getId() == null) {
+            return "redirect:/booking/failed";
+        }
+
+        // ✅ Load lại vé từ DB (đảm bảo dữ liệu mới nhất)
+        Optional<Ticket> optionalTicket = ticketRepository.findById(sessionTicket.getId());
+        if (optionalTicket.isEmpty()) {
+            return "redirect:/booking/failed";
+        }
+
+        Ticket freshTicket = optionalTicket.get();
+
+        // ✅ Tạo nội dung QR trước
+        String qrContent = "TICKET#" + freshTicket.getId();
+        String qrCodeBase64 = QRUtil.generate(qrContent);
+
+        // ✅ Kiểm tra đã từng thanh toán hay chưa
+        Optional<Payment> existingPayment = paymentService.findByTicket(freshTicket);
+        if (existingPayment.isPresent()) {
+            // ⚠ Nếu thiếu thông tin vẫn cập nhật bổ sung
+            boolean updated = false;
+            if (freshTicket.getQrCode() == null) {
+                freshTicket.setQrCode(qrCodeBase64);
+                updated = true;
+            }
+            if (freshTicket.getCreatedAt() == null) {
+                freshTicket.setCreatedAt(LocalDateTime.now());
+                updated = true;
+            }
+            if (updated) {
+                ticketRepository.save(freshTicket);
+            }
+
+            return "redirect:/booking/success";
+        }
+
+        // ✅ Trường hợp thanh toán lần đầu - gán dữ liệu
+        freshTicket.setQrCode(qrCodeBase64);
+        freshTicket.setCreatedAt(LocalDateTime.now());
+        ticketRepository.save(freshTicket);
+
+        return "redirect:/booking/success";
     }
+
 
 
     @GetMapping("/history")
     public String viewHistory(
             Model model,
-            OAuth2AuthenticationToken authentication,
+            Principal principal,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size
     ) {
-        String email = authentication.getPrincipal().getAttribute("email");
+        String email = principal.getName();
         User user = userService.findByEmail(email);
 
         Page<Payment> paymentPage = paymentService.getPaymentsByUser(user, PageRequest.of(page, size));

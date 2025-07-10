@@ -97,6 +97,6 @@ public class TicketServiceImpl implements TicketService {
     }
     @Override
     public Page<Ticket> getTicketsByUser(User user, Pageable pageable) {
-        return ticketRepository.findAllTicketsByUser(user, pageable);
+        return ticketRepository.findByUserAndCreatedAtIsNotNull(user, pageable);
     }
 }

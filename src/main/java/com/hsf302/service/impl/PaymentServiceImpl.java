@@ -10,7 +10,9 @@ import com.hsf302.repository.TicketRepository;
 import com.hsf302.service.interfaces.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -102,6 +104,41 @@ public class PaymentServiceImpl implements PaymentService {
         boolean success = checkHash.equals(secureHash) && "00".equals(responseCode);
         if (!success) {
             System.out.println("❌ Thanh toán thất bại - sai hash hoặc mã phản hồi khác 00");
+
+            // ➕ Lưu thông tin thất bại
+            try {
+                String orderInfo = vnpParams.get("vnp_OrderInfo");
+                String transactionId = vnpParams.get("vnp_TxnRef");
+                String bankCode = vnpParams.get("vnp_BankCode");
+                BigDecimal amount = new BigDecimal(vnpParams.get("vnp_Amount")).divide(BigDecimal.valueOf(100));
+                String payDateStr = vnpParams.get("vnp_PayDate");
+
+                LocalDateTime paymentTime = (payDateStr != null && !payDateStr.isEmpty())
+                        ? LocalDateTime.parse(payDateStr, DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+                        : LocalDateTime.now(); // fallback nếu vnp_PayDate không có
+
+                Long ticketId = extractTicketIdFromOrderInfo(orderInfo);
+                Ticket ticket = (ticketId != null) ? ticketRepository.findById(ticketId).orElse(null) : null;
+
+                Payment failedPayment = new Payment();
+                failedPayment.setTicket(ticket);
+                if (ticket != null) failedPayment.setUser(ticket.getUser());
+
+                failedPayment.setAmount(amount);
+                failedPayment.setBankCode(bankCode);
+                failedPayment.setTransactionId(transactionId);
+                failedPayment.setResponseCode(vnpParams.get("vnp_ResponseCode"));
+                failedPayment.setPaymentMethod("VNPAY");
+                failedPayment.setPaymentTime(paymentTime);
+                failedPayment.setSuccess(false); // ❌ thất bại
+
+                paymentRepository.save(failedPayment);
+                System.out.println("✅ Đã lưu thông tin giao dịch thất bại.");
+            } catch (Exception e) {
+                System.out.println("❌ Lỗi khi lưu thông tin giao dịch thất bại: " + e.getMessage());
+                e.printStackTrace();
+            }
+
             return false;
         }
 
@@ -161,8 +198,16 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Page<Payment> getPaymentsByUser(User user, Pageable pageable) {
-        return paymentRepository.findAllByUser(user, pageable);
+        Pageable sortedPageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "paymentTime") // Sắp theo thời gian giảm dần
+        );
+
+        // ✅ Dùng sortedPageable ở đây!
+        return paymentRepository.findAllByUser(user, sortedPageable);
     }
+
     @Override
     public void save(Payment payment) {
         paymentRepository.save(payment);

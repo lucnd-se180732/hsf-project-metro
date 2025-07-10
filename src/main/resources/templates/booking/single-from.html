@@ -6,14 +6,16 @@
     <link rel="stylesheet" href="/css/booking.css">
 
 </head>
-<body>
+<body class="booking-page">
+<a href="/booking">← Quay lại</a>
 <h1>Chọn ga xuất phát</h1>
 
-<ul>
+<ul class="departure-list">
     <li th:each="station : ${stations}">
         <a th:href="@{/booking/single/from/{id}(id=${station.id})}"
            th:text="${station.name}">Bến Thành</a>
     </li>
 </ul>
+
 </body>
 </html>

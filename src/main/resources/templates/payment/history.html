@@ -1,71 +1,80 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Lịch sử giao dịch</title>
-    <link rel="stylesheet" href="/css/payment.css" />
-</head>
-<body>
+    <title layout:fragment="title">Lịch sử giao dịch</title>
 
-<h1>Lịch sử giao dịch của bạn</h1>
-
-<div th:if="${payments.isEmpty()}">
-    <p style="text-align:center; color: gray;">Chưa có giao dịch nào.</p>
-</div>
-
-<table th:if="${!payments.isEmpty()}">
-    <thead>
-    <tr>
-        <th>Mã giao dịch</th>
-        <th>Mã vé</th>
-        <th>Số tiền</th>
-        <th>Ngân hàng</th>
-        <th>Phương thức</th>
-        <th>Thời gian</th>
-        <th>Trạng thái</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- ✅ Duyệt 1 lần duy nhất -->
-    <th:block th:each="payment : ${payments}">
-        <!-- Hàng chính -->
-        <tr>
-            <td><span th:text="${payment.transactionId}"></span></td>
-            <td><span th:text="'TICKET#' + ${payment.ticket.id}"></span></td>
-            <td><span th:text="${payment.amount} + ' VND'"></span></td>
-            <td><span th:text="${payment.bankCode}"></span></td>
-            <td><span th:text="${payment.paymentMethod}"></span></td>
-            <td><span th:text="${#temporals.format(payment.paymentTime, 'dd/MM/yyyy HH:mm')}"></span></td>
-            <td>
-                <span th:text="${payment.success ? '✔ Thành công' : '❌ Thất bại'}"
-                      th:classappend="${payment.success} ? 'status-success' : 'status-failed'"></span>
-            </td>
-        </tr>
-
-        <!-- Hàng loại vé tương ứng -->
-        <tr th:if="${payment.ticket != null}">
-            <td colspan="7">
-                🧾 <strong>Loại vé:</strong>
-                <span th:text="${payment.ticket.ticketType.displayName}"></span>
-
-                <span th:if="${payment.ticket.ticketType.name() == 'SINGLE'}">
-                    — 🚉 <strong>Ga đi:</strong> <span th:text="${payment.ticket.departureStation}"></span>,
-                    <strong>Ga đến:</strong> <span th:text="${payment.ticket.arrivalStation}"></span>
-                </span>
-            </td>
-        </tr>
+    <th:block layout:fragment="styles">
+        <link rel="stylesheet" href="/css/payment.css" />
     </th:block>
-    </tbody>
-</table>
+</head>
 
-<!-- ✅ Phân trang -->
-<div class="pagination" th:if="${totalPages > 1}">
-    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-        <a th:href="@{/payments/history(page=${i})}"
-           th:text="${i + 1}"
-           th:classappend="${i == currentPage} ? 'active' : ''">
-        </a>
-    </span>
+<body>
+<div layout:fragment="content">
+
+
+    <!-- ✅ Trường hợp không có giao dịch -->
+    <div th:if="${payments.isEmpty()}" class="no-payment-message">
+        <p>Chưa có giao dịch nào.</p>
+    </div>
+
+
+    <!-- ✅ Bảng giao dịch -->
+    <table th:if="${!payments.isEmpty()}">
+        <thead>
+        <tr>
+            <th>Mã giao dịch</th>
+            <th>Mã vé</th>
+            <th>Số tiền</th>
+            <th>Ngân hàng</th>
+            <th>Phương thức</th>
+            <th>Thời gian</th>
+            <th>Trạng thái</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="payment : ${payments}">
+            <tr>
+                <td><span th:text="${payment.transactionId}"></span></td>
+                <td><span th:text="'TICKET#' + ${payment.ticket.id}"></span></td>
+                <td><span th:text="${payment.amount} + ' VND'"></span></td>
+                <td><span th:text="${payment.bankCode}"></span></td>
+                <td><span th:text="${payment.paymentMethod}"></span></td>
+                <td><span th:text="${#temporals.format(payment.paymentTime, 'dd/MM/yyyy HH:mm')}"></span></td>
+                <td>
+                    <span th:text="${payment.success ? '✔ Thành công' : '❌ Thất bại'}"
+                          th:classappend="${payment.success} ? 'status-success' : 'status-failed'"></span>
+                </td>
+            </tr>
+
+            <!-- ✅ Mở rộng loại vé -->
+            <tr th:if="${payment.ticket != null}">
+                <td colspan="7">
+                    🧾 <strong>Loại vé:</strong>
+                    <span th:text="${payment.ticket.ticketType.displayName}"></span>
+
+                    <span th:if="${payment.ticket.ticketType.name() == 'SINGLE'}">
+                        — 🚉 <strong>Ga đi:</strong> <span th:text="${payment.ticket.departureStation}"></span>,
+                        <strong>Ga đến:</strong> <span th:text="${payment.ticket.arrivalStation}"></span>
+                    </span>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+
+    <!-- ✅ Phân trang -->
+    <div class="pagination" th:if="${totalPages > 1}">
+        <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+            <a th:href="@{/payment/history(page=${i})}"
+               th:text="${i + 1}"
+               th:classappend="${i == currentPage} ? 'active' : ''">
+            </a>
+        </span>
+    </div>
 </div>
 
 </body>

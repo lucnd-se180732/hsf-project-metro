@@ -42,7 +42,18 @@ public class BookingController {
 
     // Hiển thị chi tiết loại vé
     @GetMapping("/type/{type}")
-    public String viewTicketDetail(@PathVariable("type") TicketType type, Model model) {
+    public String viewTicketDetail(@PathVariable("type") TicketType type, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        // Nếu là vé tháng sinh viên mà không phải sinh viên thì chặn
+        if (type == TicketType.STUDENT_MONTHLY && !user.isStudent()) {
+            model.addAttribute("error", "❌ Chỉ có sinh viên mới được phép mua vé tháng sinh viên. Vui lòng đăng ký.");
+            return "booking/student-error";
+        }
+
         Ticket ticket = ticketService.previewTicket(type);
         model.addAttribute("ticket", ticket);
         return "booking/type-detail";
@@ -121,7 +132,6 @@ public class BookingController {
 
         // 👉 Lấy giá vé đúng theo bảng fares
         int fare = fareService.getFare(from, to);  // ✅ CHỈNH ĐOẠN NÀY
-
         Ticket ticket = new Ticket();
         ticket.setTicketType(TicketType.SINGLE);
         ticket.setDepartureStation(from);

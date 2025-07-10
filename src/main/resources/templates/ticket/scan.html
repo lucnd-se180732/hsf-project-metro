@@ -3,24 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Quét mã QR</title>
+    <link rel="stylesheet" href="/css/ticket.css">
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        #reader {
-            width: 400px;
-            margin: 20px auto;
-        }
-        .result {
-            margin-top: 20px;
-            font-weight: bold;
-            color: green;
-        }
-    </style>
 </head>
-<body>
+<body class="ticket-page">
+
 <h1>🎥 Quét mã QR để kiểm tra vé</h1>
 
 <div id="reader"></div>
@@ -35,7 +22,7 @@
     }
 
     function onScanError(error) {
-        // Không cần in ra nếu không muốn spam console
+        // Không cần log nếu không cần
     }
 
     const html5QrCode = new Html5Qrcode("reader");

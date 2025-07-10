@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> findByUser(User user);
-    Page<Ticket>  findAllTicketsByUser(User user, Pageable pageable);
+    Page<Ticket>  findByUserAndCreatedAtIsNotNull(User user, Pageable pageable);
 }
