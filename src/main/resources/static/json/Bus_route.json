@@ -1,0 +1,135 @@
+[
+  {
+    "routeNumber": "153",
+    "name": "Bến tàu thủy Bình An – Đường Liên Phường",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Bến tàu thủy Bình An – Đường số 21 – Đường số 19 – Đường Trần Não – Đường Nguyễn Văn Hưởng – Đường Thảo Điền – Đường Song hành trái – Đường Võ Trường Toản – Đường Võ Nguyên Giáp – Quay đầu – Đường Võ Nguyên Giáp – Đường 24 – Đường Vũ Tông Phan – đường Lồ Bắc – Đường Mai Chí Thọ – Đường Nguyễn Thị Định – Đường Nguyễn Duy Trinh – Đường 63 – Đường 56 – Đường Đỗ Xuân Hợp – Đường Liên Phường"
+  },
+  {
+    "routeNumber": "154",
+    "name": "Thạnh Mỹ Lợi – Masteri An Phú",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Đường Trương Gia Mô – Đường Đồng Văn Cống – quay đầu tại ngã tư Mỹ Thủy – Đường Đồng Văn Cống – Đường Nguyễn Thị Định – Đường Lê Văn Thịnh - Đường Nguyễn Duy Trinh – Đường Nguyễn Thị Định – quay đầu trên đường dẫn cao tốc – Đường Mai Chí Thọ – quay đầu tại dạ cầu Rạch Chiếc – song hành trái – Ga Rạch Chiếc – song hành trái – Đường Võ Nguyên Giáp – quay đầu – Đường Võ Nguyên Giáp – song hành phải – Đường Nguyễn Quý Đức – Đường Thái Thuận – Đường Dương Văn An – Đường số 22 – Đường Vũ Tông Phan – Đường số 24 – Đường Pháp Thuận – Đường Bùi Tá Hán – Đường Cao Đức Lân – Đường Nguyễn Hoàng – Đường Lương Định Của – Đường Nguyễn Thị Định – Đường Đồng Văn Cống – Đường Trương Gia Mô"
+
+  },
+  {
+    "routeNumber": "155",
+    "name": "Bx. Sài Gòn – Nhà hát TP",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "15 - 20 phút",
+    "direction": "Ga Bến Thành - Đường Phạm Ngũ Lão - Đường Yersin - Đường Nguyễn Công Trứ - Đường Pasteur - Đường Lý Tự Trọng - Đường Đồng Khởi - Đường Mạc Thị Bưởi - Đường Hai Bà Trưng - Đường Nguyễn Siêu - Đường Thái Văn Lung - Đường Lý Tự Trọng - Đường Chu Mạnh Trinh - Đường Nguyễn Du - Đường Mạc Đỉnh Chi - Đường Lê Duẩn - Đường Nam Kỳ Khởi Nghĩa - Đường Lê Lợi - Đường Trần Hưng Đạo - Đường Phạm Ngũ Lão - Ga Bến Thành"
+
+  },
+  {
+    "routeNumber": "156",
+    "name": "Bx. Sài Gòn – Ga Hòa Hưng",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Ga Bến Thành – Đường Phạm Ngũ Lão – Đường Nguyễn Thị Nghĩa - Đường Lê Lai - Đường Tôn Thất Tùng – Đường Bùi Thị Xuân – Đường Cống Quỳnh – Đường Cao Thắng – Đường 3 tháng 2 – Đường Nguyễn Phúc Nguyên – Ga Sài Gòn – Đường Nguyễn Thông – Đường Lý Chính Thắng – Đường Bà Huyện Thanh Quan – Đường Nguyễn Thị Minh Khai – Đường Huyền Trân Công Chúa – Đường Thủ Khoa Huân – Đường Lý Tự Trọng – Đường Nam Kỳ Khởi Nghĩa – Đường Lê Lợi – Đường Trần Hưng Đạo – Đường Phạm Ngũ Lão – Ga Bến Thành"
+
+  },
+  {
+    "routeNumber": "157",
+    "name": "Văn Thánh – Chung cư Đức Khải",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Bến xe buýt Văn Thánh – Đường Nguyễn Văn Thương – Đường Điện Biên Phủ – quay đầu ngã tư Hàng Xanh – Đường Điện Biên Phủ – Cầu Sài Gòn – Cầu Đen – song hành phải – Ga Thảo Điền – song hành phải – Đường Nguyễn Quý Cảnh – Đường Thái Thuận – Đường số 8 khu B – Đường Dương Văn An – Đường số 22 – Đường Vũ Tông Phan – Đường Trần Lựu – Đường số 4 – Đường số 37 – Đường số 11 – Đường Lương Định Của - Đường nội bộ chung cư 280 - Đường số 8 – Đường H – Đường số 1 – Đường số 9BK – Đường số 6 – Đường số 10 – Đường số 4 – Đường Mai Chí Thọ – Đường số 1 – Đường Lương Định Của – Đường Vành Đai Tây – Đường số 3 –Đường số 2 – Đường Trần Não – Dạ cầu Sài Gòn – Đường Quốc Hương – Cầu Sài Gòn – Đường Điện Biên Phủ – Đường Nguyễn Văn Thương – Bến xe buýt Văn Thánh"
+
+  },
+  {
+    "routeNumber": "158",
+    "name": "Văn Thánh – Thanh Đa",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Bến xe buýt Văn thánh – Đường Nguyễn Văn Thương – Đường Điện Biên Phủ – Đường Nguyễn Gia Trí – Đường D5 – Đường Xô Viết Nghệ Tĩnh – Đường Bình Quới – Đường Thanh Đa – Lô L – Đường Thanh Đa – Đường Bình Quới – Đường Xô Viết Nghệ Tĩnh – Đường Ung Văn Khiêm – Đường Nguyễn Gia Trí – Đường Võ Oanh – Đường Nguyễn Văn Thương – Đường Ung Văn Khiêm – Ga Tân Cảng – Đường Điện Biên Phủ – Đường Nguyễn Văn Thương – Bến xe buýt Văn Thánh"
+
+  },
+  {
+    "routeNumber": "159",
+    "name": "Ngô Tất Tố – Hàng Xanh",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Ga Văn Thánh – Hẻm 56 Điện Biên Phủ – Hẻm 135 Nguyễn Hữu Cảnh – Đường Nguyễn Hữu Cảnh – Đường Ngô Tất Tố – Đường Nguyễn Văn Lạc – Đường Xô Viết Nghệ Tĩnh – Đường Nguyễn Cửu Vân – Đường Điện Biên Phủ – Hẻm 48 Điện Biên Phủ – Hẻm 56 Điện Biên Phủ – Ga Văn Thánh"
+
+  },
+  {
+    "routeNumber": "160",
+    "name": "Văn Thánh – Vinhomes Central Park",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Ga Văn Thánh - hẻm 56 Điện Biên Phủ - hẻm 48 Điện Biên Phủ - đường Điện Biên Phủ - dưới cầu vượt Nguyễn Hữu Cảnh - đường nội bộ khu dân cư Vinhomes Central Park (dọc Công viên Vinhomes Central Park) - quay đầu tại giao lộ đường nội bộ khu dân cư Vinhomes Central Park (đường Vạn Hoa 5) - đường nội bộ khu dân cư Vinhomes Central Park (dọc Công viên Vinhomes Central Park) - đường Nguyễn Hữu Cảnh - đường Điện Biên Phủ (làn ô tô) - (quay đầu tại giao lộ trước Pearl Plaza) - đường Điện Biên Phủ (làn ô tô) - đường Nguyễn Hữu Cảnh - hẻm 135 Nguyễn Hữu Cảnh - hẻm 56 Điên Biên Phủ - Ga Văn Thánh"
+
+  },
+  {
+    "routeNumber": "161",
+    "name": "Văn Thánh – Bến xe Ngã Tư Ga",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Bến xe buýt Văn Thánh – Đường Nguyễn Văn Thương – Đường Điện Biên Phủ – Quốc lộ 13 – Đường Đinh Bộ Lĩnh – Đường Chu Văn An – Đường Phan Chu Trinh – Đường Nơ Trang Long – Đường Phan Văn Trị – Đường Lê Đức Thọ – Đường Nguyễn Oanh – Đường Hà Huy Giáp – Cầu Vượt Ngã tư Ga - Đường vòng cầu vượt Ngã tư Ga – Quốc lộ 1 – Bến xe Ngã tư Ga"
+  },
+  {
+    "routeNumber": "162",
+    "name": "Man Thiện – THCS Hoa Lư",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Bến xe buýt Ga Bình Thái – song hành phải – Đường Phan Chu Trinh – Đường Quang Trung – Đường Trương Văn Hải – Đường Ngô Quyền – Đường Hồ Thị Tư – Đường Lê Văn Việt – Đường Man Thiện – Đường khu Chung cư C3, C4 – Đường khu Chung cư C1, C2 – Đường Tân Hòa 2 – Đường 904 – song hành phải – Bến xe buýt Ga Bình Thái"
+
+  },
+  {
+    "routeNumber": "163",
+    "name": "Cao đẳng Công Thương – Phước Bình",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Bến xe buýt Ga Bình Thái – song hành phải – Đường Đỗ Xuân Hợp – Đường Tăng Nhơn Phú – Đường số 22 – Đường Dương Đình Hội – đường Đỗ Xuân Hợp – Đường số 9 – Đường số 18 – Đại lộ 2 – Đường số 15 – đường số 1 – Đường Trần Đức Thảo – Đường Đỗ Xuân Hợp – Đường Tây Hòa – song hành phải – Bến xe buýt Ga Bình Thái"
+
+  },
+  {
+    "routeNumber": "164",
+    "name": "ĐH Nông lâm – Chung cư Topaz",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Bến xe buýt Đại học Nông Lâm – Quốc lộ 1 – Đường Bưng Sáu Xã – Đường Nam Cao – Đường Cầu Xây – Đường Hoàng Hữu Nam – Đường 154 – song hành phải – Quốc lộ 1 – quay đầu (trước Nghĩa trang liệt sĩ Thành phố Hồ Chí Minh) – song hành trái – Ga Đại học Quốc gia – song hành trái – Quốc lộ 1 – Bến xe buýt Đại học Nông Lâm"
+
+  },
+  {
+    "routeNumber": "165",
+    "name": "ĐH Nông lâm – Khu CNC",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Bến xe buýt Đại học Nông Lâm – Quốc lộ 1 – song hành trái – Ga Khu Công nghệ cao – Đường D1 – Đường D2 – Đường D14A – Đường D14 – Đường D15 đoạn I – Đường D12 – Đường D2 – Đường D11B – Đường D18 – Đường D2 – Đường D7 – Đường D8 – Đường D1 – Tiểu đảo (nút giao Đường D1 và Đường N7) – Đường D1 – Ga Khu Công nghệ cao – song hành trái – Đường số 17 – Bến xe buýt Nông Lâm"
+
+  },
+  {
+    "routeNumber": "166",
+    "name": "ĐH Quốc gia – Suối Tiên",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Bến xe buýt Khu A – Đường Nguyễn Hiền – Đường Vành đai – Đường 621 – song hành trái – Ga Đại học Quốc gia – Quốc lộ 1 – Đường Võ Trường Toản – Đường Alexandre de Rhodes (rẽ trái) – Đường T1 – (rẽ phải) - Đường Trục chính T3 - Quảng Trường sáng tạo – quay đầu (tại nút giao Quảng trường sáng tạo – Đường Hàn Thuyên) – Quảng trường sáng tạo – Đường Lưu Hữu Phước – Quảng trường sáng tạo – Đường Lê Quý Đôn – Đường Thomas Edison – Trường Đại học Bách Khoa – Đường Tạ Quang Bửu – Đường Thánh Gióng – Đường Vành đai – Đường Nguyễn Hiền – Bến xe buýt Khu A"
+
+  },
+  {
+    "routeNumber": "167",
+    "name": "ĐH Nông lâm – Linh Trung 1",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Bến xe buýt Đại học Nông Lâm – Đường Đỗ Mười (Quốc lộ 1) – Đường số 2 – Đường số 8 – Đường Hoàng Cầm (Quốc lộ 1K) – Đường số 9 - Đường số 11 – Đường M – Đường số 9 – Đường Nguyễn Tri Phương – Đường -số 5 – Đường Hoàng Cầm (Quốc lộ 1K) – Đường Đỗ Mười (Quốc lộ 1) – Đường số 12 – Đường số 13 – Đường số 14 – Đường Linh Trung – song hành trái – Ga Khu Công nghệ cao – Đường số 17 – Bến xe buýt Đại học Nông Lâm"
+
+  },
+  {
+    "routeNumber": "168",
+    "name": "ĐH SPKT – Ngã tư Bình Thái",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Bến xe buýt Ga Bình Thái – song hành phải – Đường Võ Nguyên Giáp – Đường Nguyễn Văn Bá – Đường Đặng Văn Bi – Đường Thống Nhất – Đường Võ Văn Ngân – Đường số 6 – Đường số 5 – Đường Tô Vĩnh Diện – Đường Võ Văn Ngân – Đường Dân Chủ – Đường Chu Mạnh Trinh – Đường Công Lý – Đường Lê Quý Đôn – Đường Nguyễn Văn Bá – Đường Võ Nguyên Giáp – Song hành phải – Bến xe buýt Ga Bình Thái"
+  },
+  {
+    "routeNumber": "169",
+    "name": "Vincom Thủ Đức – Ngã tư Tây Hòa",
+    "operatingHours": "05:30 – 22:00",
+    "frequency": "10 - 15 phút",
+    "direction": "Bến xe buýt Ga Bình Thái – Song hành phải – Ngã tư Bình Thái – song hành trái – Đường số 3 – Đường số 2 – Đường số 11 – Đường Hồ Văn Tư – Đường số 9 – Đường Đặng Văn Bi – Đường Võ Văn Ngân – Đường Dân Chủ – Đường Đặng Văn Bi – Đường Nguyễn Văn Bá – Ngã tư Bình Thái – Song hành phải – Bến xe buýt Ga Bình Thái"
+
+  }
+]
