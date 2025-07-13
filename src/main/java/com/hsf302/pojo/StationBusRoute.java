@@ -1,9 +1,8 @@
-package com.hsf302.entity;
+package com.hsf302.pojo;
 
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.*;
 
 @Entity
 @Table(name = "station_bus_routes", uniqueConstraints = {

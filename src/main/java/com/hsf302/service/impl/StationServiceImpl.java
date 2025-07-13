@@ -1,21 +1,20 @@
 package com.hsf302.service.impl;
 
-
 import com.hsf302.dto.request.StationRequestDto;
 import com.hsf302.dto.response.StationResponseDto;
-import com.hsf302.entity.Station;
 import com.hsf302.mapper.StationMapper;
+import com.hsf302.pojo.Route;
+import com.hsf302.pojo.Station;
 import com.hsf302.repository.StationRepository;
-import com.hsf302.service.interfaces.IStationService;
+import com.hsf302.service.interfaces.StationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class StationServiceImpl implements IStationService {
+public class StationServiceImpl implements StationService {
 
     private final StationRepository stationRepository;
     private final StationMapper stationMapper;
@@ -25,8 +24,6 @@ public class StationServiceImpl implements IStationService {
         Station station = stationMapper.toEntity(dto);
         return stationMapper.toDto(stationRepository.save(station));
     }
-
-
 
     @Override
     public StationResponseDto update(Long id, StationRequestDto dto) {
@@ -56,5 +53,14 @@ public class StationServiceImpl implements IStationService {
                 .map(stationMapper::toDto)
                 .toList();
     }
-}
 
+    @Override
+    public Station findByName(String name) {
+        return stationRepository.findByName(name);
+    }
+
+    @Override
+    public List<Station> findByRouteOrderByStationOrder(Route route) {
+        return stationRepository.findByRouteOrderByStationOrderAsc(route);
+    }
+}

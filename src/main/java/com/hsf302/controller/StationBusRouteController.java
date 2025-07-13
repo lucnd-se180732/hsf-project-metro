@@ -3,13 +3,11 @@ package com.hsf302.controller;
 import com.hsf302.dto.request.StationBusRouteRequestDto;
 import com.hsf302.service.interfaces.IBusRouteService;
 import com.hsf302.service.interfaces.IStationBusRouteService;
-import com.hsf302.service.interfaces.IStationService;
+import com.hsf302.service.interfaces.StationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/station-bus-maps")
@@ -17,7 +15,7 @@ import java.util.UUID;
 public class StationBusRouteController {
 
     private final IStationBusRouteService stationBusRouteService;
-    private final IStationService stationService;
+    private final StationService stationService;
     private final IBusRouteService busRouteService;
 
     @GetMapping

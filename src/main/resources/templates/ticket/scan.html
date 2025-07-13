@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quét mã QR</title>
+    <link rel="stylesheet" href="/css/ticket.css">
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body class="ticket-page">
+
+<h1>🎥 Quét mã QR để kiểm tra vé</h1>
+
+<div id="reader"></div>
+<div class="result" id="result"></div>
+
+<script>
+    const resultElement = document.getElementById("result");
+
+    function onScanSuccess(decodedText) {
+        resultElement.innerHTML = "📦 Đang xác thực vé...";
+        window.location.href = '/tickets/check-ticket?code=' + encodeURIComponent(decodedText);
+    }
+
+    function onScanError(error) {
+        // Không cần log nếu không cần
+    }
+
+    const html5QrCode = new Html5Qrcode("reader");
+
+    Html5Qrcode.getCameras().then(devices => {
+        if (devices && devices.length) {
+            html5QrCode.start(
+                devices[0].id,
+                {
+                    fps: 10,
+                    qrbox: { width: 250, height: 250 }
+                },
+                onScanSuccess,
+                onScanError
+            ).catch(err => {
+                resultElement.innerHTML = "❌ Không thể khởi động camera: " + err;
+            });
+        } else {
+            resultElement.innerHTML = "❌ Không tìm thấy camera nào.";
+        }
+    }).catch(err => {
+        resultElement.innerHTML = "❌ Lỗi khi lấy danh sách camera: " + err;
+    });
+</script>
+
+</body>
+</html>

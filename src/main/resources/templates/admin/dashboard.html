@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout-admin}">
+<head><title>Dashboard</title></head>
+<body>
+<main layout:fragment="content">
+  <div class="container py-4">
+    <h2>Thống kê hệ thống</h2>
+    <div class="row mt-4">
+      <div class="col-md-3"><div class="card text-center"><div class="card-body"><h5 th:text="${totalUsers}">0</h5><p>Người dùng</p></div></div></div>
+      <div class="col-md-3"><div class="card text-center"><div class="card-body"><h5 th:text="${pendingVerifications}">0</h5><p>Chờ duyệt SV</p></div></div></div>
+      <div class="col-md-3"><div class="card text-center"><div class="card-body"><h5 th:text="${verifiedStudents}">0</h5><p>Đã xác minh</p></div></div></div>
+      <div class="col-md-3"><div class="card text-center"><div class="card-body"><h5 th:text="${contactRequests}">0</h5><p>Liên hệ hỗ trợ</p></div></div></div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

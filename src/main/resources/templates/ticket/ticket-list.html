@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title layout:fragment="title">Vé của tôi</title>
+
+    <th:block layout:fragment="styles">
+        <link rel="stylesheet" href="/css/ticket.css">
+    </th:block>
+</head>
+
+<body class="ticket-page">
+<div layout:fragment="content">
+
+    <!-- 🔘 Tabs chuyển loại vé -->
+    <div class="tabs">
+        <a th:href="@{/tickets(type='active')}" th:classappend="${activeTab == 'active'} ? 'active'">Đã kích hoạt</a>
+        <a th:href="@{/tickets(type='inactive')}" th:classappend="${activeTab == 'inactive'} ? 'active'">Chưa kích hoạt</a>
+        <a th:href="@{/tickets(type='expired')}" th:classappend="${activeTab == 'expired'} ? 'active'">Đã hết hạn</a>
+    </div>
+
+    <!-- ❌ Không có vé -->
+    <div class="no-ticket-message" th:if="${tickets.isEmpty()}">
+        <p>🚫 Hiện tại bạn chưa có vé nào.</p>
+    </div>
+
+    <!-- ✅ Danh sách vé -->
+    <div class="ticket-list-wrapper" th:if="${!tickets.isEmpty()}">
+        <div th:each="ticket : ${tickets}" class="ticket-card">
+            <div class="ticket-info">
+                <h2 th:text="|Loại vé: ${ticket.ticketType.displayName}|"></h2>
+                <p th:if="${ticket.departureStation != null}">
+                    Ga đi: <span th:text="${ticket.departureStation}"></span>
+                    – Ga đến: <span th:text="${ticket.arrivalStation}"></span>
+                </p>
+                <p>Ngày bắt đầu: <span th:text="${#temporals.format(ticket.startDate, 'dd/MM/yyyy HH:mm')}"></span></p>
+                <p>Ngày kết thúc: <span th:text="${#temporals.format(ticket.endDate, 'dd/MM/yyyy HH:mm')}"></span></p>
+                <p>Mô tả: <span th:text="${ticket.description}"></span></p>
+                <p>Lưu ý: <span th:text="${ticket.note}"></span></p>
+                <p th:text="|Giá: ${ticket.price} VND|"></p>
+                <p class="ticket-status">
+                    Trạng thái:
+                    <span th:text="${ticket.activatedAt != null or ticket.ticketType.name() == 'SINGLE' ? 'Đã kích hoạt' : 'Chưa kích hoạt'}"></span>
+                </p>
+            </div>
+            <div class="ticket-actions">
+                <img th:src="|data:image/png;base64,${ticket.qrCode}|" alt="QR Code"/>
+                <th:block th:if="${ticket.ticketType != T(com.hsf302.enums.TicketType).SINGLE and ticket.activatedAt == null}">
+                    <form th:action="@{'/tickets/activate/' + ${ticket.id}}" method="post">
+                        <button type="submit">Kích hoạt vé</button>
+                    </form>
+                </th:block>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ Phân trang -->
+    <div class="pagination" th:if="${totalPages > 1}">
+        <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+            <a th:href="@{/tickets(page=${i}, type=${activeTab})}"
+               th:text="${i + 1}"
+               th:classappend="${i == currentPage} ? 'active' : ''">
+            </a>
+        </span>
+    </div>
+</div>
+</body>
+</html>

@@ -2,21 +2,19 @@ package com.hsf302.controller;
 
 
 import com.hsf302.dto.request.StationRequestDto;
-import com.hsf302.service.interfaces.IStationService;
+import com.hsf302.service.interfaces.StationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @Controller
 @RequestMapping("/stations")
 @RequiredArgsConstructor
 public class StationController {
 
-    private final IStationService stationService;
+    private final StationService stationService;
 
     @GetMapping
     public String list(Model model) {

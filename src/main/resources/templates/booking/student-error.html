@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lỗi vé sinh viên</title>
+    <link rel="stylesheet" href="/css/booking.css">
+</head>
+<body class="booking-page">
+
+<div class="student-error-container">
+    <h1>🚫 Không thể mua vé</h1>
+    <p th:text="${error}">Lỗi không rõ.</p>
+    <a href="/booking" class="btn-back">← Quay lại trang chọn loại vé</a>
+</div>
+
+</body>
+</html>

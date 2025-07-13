@@ -3,7 +3,7 @@ package com.hsf302.mapper;
 
 import com.hsf302.dto.request.StationRequestDto;
 import com.hsf302.dto.response.StationResponseDto;
-import com.hsf302.entity.Station;
+import com.hsf302.pojo.Station;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")

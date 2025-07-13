@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title layout:title-pattern="$CONTENT_TITLE | Quản trị Metro">Quản trị</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f9;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #003B73;
+            min-height: 100vh;
+            color: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        .sidebar a {
+            color: white;
+            display: block;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .sidebar a:hover,
+        .sidebar a.active {
+            background-color: #0056b3;
+            padding-left: 1.75rem;
+        }
+        .main-content {
+            padding: 2rem;
+            width: calc(100% - 250px);
+        }
+        .btn-warning {
+            color: #000;
+            font-weight: 500;
+            padding: 0.5rem 1.5rem;
+        }
+    </style>
+    <th:block layout:fragment="styles"></th:block>
+</head>
+<body>
+    <div class="d-flex">
+        <div class="sidebar">
+            <h4 class="text-center py-4 mb-2">Admin Panel</h4>
+
+            <a th:href="@{/admin/dashboard}"
+               th:classappend="${currentUri != null and currentUri.startsWith('/admin/dashboard')} ? 'active'">
+                <i class="fas fa-home me-2"></i> Trang chủ
+            </a>
+
+            <a th:href="@{/admin/verifications}"
+               th:classappend="${currentUri != null and currentUri.startsWith('/admin/verifications')} ? 'active'">
+                <i class="fas fa-user-check me-2"></i> Duyệt sinh viên
+            </a>
+
+            <a th:href="@{/admin/users}"
+               th:classappend="${currentUri != null and currentUri.startsWith('/admin/users')} ? 'active'">
+                <i class="fas fa-users me-2"></i> Quản lý người dùng
+            </a>
+            <a th:href="@{/tickets/check-ticket/camera}"
+               th:classappend="${currentUri != null and currentUri.startsWith('/admin/ticket')} ? 'active'">
+                <i class="fas fa-ticket-alt me-2"></i> Xoát vé
+            </a>
+
+            <a th:href="@{/admin/contact}"
+               th:classappend="${currentUri != null and currentUri.startsWith('/admin/contact')} ? 'active'">
+                <i class="fas fa-envelope me-2"></i> Xem liên hệ
+            </a>
+
+            <form th:action="@{/logout}" method="post" class="mt-4 px-3">
+                <button class="btn btn-warning w-100">
+                    <i class="fas fa-sign-out-alt me-2"></i> Đăng xuất
+                </button>
+            </form>
+        </div>
+
+        <div class="main-content">
+            <main layout:fragment="content"></main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <th:block layout:fragment="scripts"></th:block>
+</body>
+</html>

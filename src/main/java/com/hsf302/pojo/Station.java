@@ -1,31 +1,40 @@
-package com.hsf302.entity;
+package com.hsf302.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
-import java.util.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "stations")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Station {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "station_code", nullable = false, unique = true)
+    @Column(columnDefinition = "NVARCHAR(50)",nullable = false, unique = true)
     private String stationCode;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "NVARCHAR(100)")
     private String name;
 
+    @Column(columnDefinition = "NVARCHAR(255)")
     private String address;
 
+    private int stationOrder;
+
+    private Double distanceFromStartKm;
+
     private Double latitude;
+
     private Double longitude;
 
     @Column(name = "is_terminal")
@@ -33,8 +42,6 @@ public class Station {
 
     @Column(name = "is_interchange")
     private Boolean isInterchange = false;
-
-    private String facilities; // có thể lưu JSON hoặc text
 
     @Column(name = "is_active")
     private Boolean isActive = true;
@@ -44,6 +51,14 @@ public class Station {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt = new Date();
+
+    @ManyToOne
+    @JoinColumn(name = "route_id")
+    @JsonBackReference
+    private Route route;
+
+    @OneToMany(mappedBy = "station", cascade = CascadeType.ALL)
+    private List<TrainStationSchedule> trainSchedules = new ArrayList<>();
 
     @OneToMany(mappedBy = "station", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StationBusRoute> stationBusRoutes = new ArrayList<>();

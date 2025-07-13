@@ -2,9 +2,9 @@ package com.hsf302.service.impl;
 
 import com.hsf302.dto.request.StationBusRouteRequestDto;
 import com.hsf302.dto.response.StationBusRouteResponseDto;
-import com.hsf302.entity.Station;
-import com.hsf302.entity.BusRoute;
-import com.hsf302.entity.StationBusRoute;
+import com.hsf302.pojo.BusRoute;
+import com.hsf302.pojo.Station;
+import com.hsf302.pojo.StationBusRoute;
 import com.hsf302.mapper.StationBusRouteMapper;
 import com.hsf302.repository.StationBusRouteRepository;
 import com.hsf302.repository.StationRepository;

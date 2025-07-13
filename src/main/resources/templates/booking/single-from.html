@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chọn ga xuất phát</title>
+    <link rel="stylesheet" href="/css/booking.css">
+
+</head>
+<body class="booking-page">
+<a href="/booking">← Quay lại</a>
+<h1>Chọn ga xuất phát</h1>
+
+<ul class="departure-list">
+    <li th:each="station : ${stations}">
+        <a th:href="@{/booking/single/from/{id}(id=${station.id})}"
+           th:text="${station.name}">Bến Thành</a>
+    </li>
+</ul>
+
+</body>
+</html>

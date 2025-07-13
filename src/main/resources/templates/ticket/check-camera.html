@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quét QR Code</title>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+<div class="ticket-page">
+<h1>Quét mã QR vé tàu</h1>
+
+<div id="qr-reader" style="width: 400px;"></div>
+<div id="result" style="margin-top: 20px;"></div>
+
+<script>
+    function onScanSuccess(qrCodeMessage) {
+        document.getElementById('result').innerHTML = `<p>Đã quét được: ${qrCodeMessage}</p>`;
+        // Gửi lên controller backend
+        window.location.href = `/check-ticket?code=${encodeURIComponent(qrCodeMessage)}`;
+    }
+
+    function onScanError(errorMessage) {
+        // console.log(`Scan error: ${errorMessage}`);
+    }
+
+    const html5QrCode = new Html5Qrcode("qr-reader");
+    html5QrCode.start(
+        { facingMode: "environment" }, // có thể đổi thành "user" nếu cần dùng camera trước
+        {
+            fps: 10,
+            qrbox: 250
+        },
+        onScanSuccess,
+        onScanError
+    ).catch(err => {
+        document.getElementById('result').innerText = "Không thể mở camera: " + err;
+    });
+</script>
+</div>
+</body>
+</html>

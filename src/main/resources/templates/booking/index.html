@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title layout:fragment="title">Chọn loại vé</title>
+
+    <!-- Thêm CSS riêng -->
+    <th:block layout:fragment="styles">
+        <link rel="stylesheet" href="/css/booking.css">
+    </th:block>
+</head>
+
+<body> <!-- ✅ Bắt buộc cần body khi dùng layout:fragment -->
+
+<div layout:fragment="content">
+    <div class="booking-page">
+        <h1>Chọn loại vé</h1>
+
+        <section class="choose-ticket-wrapper">
+            <div class="ticket-types">
+                <div th:each="type : ${ticketTypes}" class="ticket-card">
+                    <a th:if="${type.name() == 'SINGLE'}" th:href="@{/booking/single}">
+                        <div class="ticket-icon"></div>
+                        <h3 th:text="${type.displayName}">Vé lượt</h3>
+                    </a>
+                    <a th:unless="${type.name() == 'SINGLE'}" th:href="@{/booking/type/{type}(type=${type.name()})}">
+                        <div class="ticket-icon"></div>
+                        <h3 th:text="${type.displayName}">Vé khác</h3>
+                    </a>
+                </div>
+                <div class="banner"></div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<th:block layout:fragment="scripts">
+    <!-- JS nếu có -->
+</th:block>
+</body>
+</html>

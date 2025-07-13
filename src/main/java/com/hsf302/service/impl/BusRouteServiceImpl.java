@@ -3,7 +3,7 @@ package com.hsf302.service.impl;
 
 import com.hsf302.dto.request.BusRouteRequestDto;
 import com.hsf302.dto.response.BusRouteResponseDto;
-import com.hsf302.entity.BusRoute;
+import com.hsf302.pojo.BusRoute;
 import com.hsf302.mapper.BusRouteMapper;
 import com.hsf302.repository.BusRouteRepository;
 import com.hsf302.service.interfaces.IBusRouteService;
@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
