@@ -33,5 +33,10 @@ public class StationBusRoute {
     @Column(name = "walking_time_minutes")
     private Integer walkingTimeMinutes;
 
-
+    public StationBusRoute(Station station, BusRoute busRoute, Integer walkingDistanceM, Integer walkingTimeMinutes) {
+        this.station = station;
+        this.busRoute = busRoute;
+        this.walkingDistanceM = walkingDistanceM;
+        this.walkingTimeMinutes = walkingTimeMinutes;
+    }
 }

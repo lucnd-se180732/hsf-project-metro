@@ -64,13 +64,9 @@
             </a>
             <a th:href="@{/tickets/check-ticket/camera}"
                th:classappend="${currentUri != null and currentUri.startsWith('/admin/ticket')} ? 'active'">
-                <i class="fas fa-ticket-alt me-2"></i> Xoát vé
+                <i class="fas fa-ticket-alt me-2"></i> Soát vé
             </a>
 
-            <a th:href="@{/admin/contact}"
-               th:classappend="${currentUri != null and currentUri.startsWith('/admin/contact')} ? 'active'">
-                <i class="fas fa-envelope me-2"></i> Xem liên hệ
-            </a>
 
             <form th:action="@{/logout}" method="post" class="mt-4 px-3">
                 <button class="btn btn-warning w-100">

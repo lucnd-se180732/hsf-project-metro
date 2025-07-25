@@ -20,7 +20,7 @@ public class BusRoute {
     @Column(name = "route_number", nullable = false, unique = true)
     private String routeNumber;
 
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "NVARCHAR(500)")
     private String name;
 
     @Column(columnDefinition = "NVARCHAR(500)")

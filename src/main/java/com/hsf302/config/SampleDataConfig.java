@@ -25,6 +25,9 @@ public class SampleDataConfig implements CommandLineRunner {
     @Autowired
     private TicketConfigRepository ticketConfigRepository;
 
+    @Autowired
+    private BusRouteRepository busRouteRepository;
+
     @Override
     public void run(String... args) throws Exception {
         if (routeRepository.count() > 0) return;
@@ -54,6 +57,34 @@ public class SampleDataConfig implements CommandLineRunner {
                 newStation("M14", "Suối Tiên", "TP.Thủ Đức", 19.7, 14, route1, 10.879526, 106.814087)
         };
         stationRepository.saveAll(Arrays.asList(stations));
+
+        if (busRouteRepository.count() == 0) {
+            Date now = new Date();
+            List<BusRoute> busRoutes = List.of(
+                    newBusRoute("153", "Bến tàu thủy Bình An – Đường Liên Phường", now),
+                    newBusRoute("154", "Thạnh Mỹ Lợi – Masteri An Phú", now),
+                    newBusRoute("155", "Bx. Sài Gòn – Nhà hát TP", now),
+                    newBusRoute("156", "Bx. Sài Gòn – Ga Hòa Hưng", now),
+                    newBusRoute("157", "Văn Thánh – Chung cư Đức Khải", now),
+                    newBusRoute("158", "Văn Thánh – Thanh Đa", now),
+                    newBusRoute("159", "Ngô Tất Tố – Hàng Xanh", now),
+                    newBusRoute("160", "Văn Thánh – Vinhomes Central Park", now),
+                    newBusRoute("161", "Văn Thánh – Bến xe Ngã Tư Ga", now),
+                    newBusRoute("162", "Man Thiện – THCS Hoa Lư", now),
+                    newBusRoute("163", "Cao đẳng Công Thương – Phước Bình", now),
+                    newBusRoute("164", "ĐH Nông lâm – Chung cư Topaz", now),
+                    newBusRoute("165", "ĐH Nông lâm – Khu CNC", now),
+                    newBusRoute("166", "ĐH Quốc gia – Suối Tiên", now),
+                    newBusRoute("167", "ĐH Nông lâm – Linh Trung 1", now),
+                    newBusRoute("168", "ĐH SPKT – Ngã tư Bình Thái", now),
+                    newBusRoute("169", "Vincom Thủ Đức – Ngã tư Tây Hòa", now)
+            );
+            busRouteRepository.saveAll(busRoutes);
+        }
+
+
+
+
 
         // 3. Tạo tàu và lịch trình
         int numTrains = 9;
@@ -127,4 +158,17 @@ public class SampleDataConfig implements CommandLineRunner {
         }
         return reversed;
     }
+
+    private BusRoute newBusRoute(String routeNumber, String name, Date now) {
+        BusRoute route = new BusRoute();
+        route.setRouteNumber(routeNumber);
+        route.setName(name);
+        route.setDescription("Tuyến " + routeNumber + ": " + name);
+        route.setOperator("HSF Bus");
+        route.setIsActive(true);
+        route.setCreatedAt(now);
+        route.setUpdatedAt(now);
+        return route;
+    }
+
 }
