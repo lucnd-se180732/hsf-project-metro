@@ -18,11 +18,11 @@ public class FareServiceImpl implements FareService {
 
     @Override
     public int getFare(String from, String to) {
-        Optional<FareMatrix> direct = fareRepository.findByFromStationAndToStation(from, to);
+        Optional<FareMatrix> direct = fareRepository.findFareIgnoreCase(from, to);
         if (direct.isPresent())
             return direct.get().getPrice();
 
-        Optional<FareMatrix> reverse = fareRepository.findByFromStationAndToStation(to, from);
+        Optional<FareMatrix> reverse = fareRepository.findFareIgnoreCase(to, from);
         if (reverse.isPresent())
             return reverse.get().getPrice();
 

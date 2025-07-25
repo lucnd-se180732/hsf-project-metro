@@ -6,6 +6,8 @@ import com.hsf302.service.interfaces.StudentVerificationService;
 
 import com.hsf302.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -73,6 +75,18 @@ public class UserController {
         studentVerificationService.handleUpload(request, principal.getName());
         redirectAttributes.addFlashAttribute("successMessage", "Gửi xác minh thành công. Vui lòng chờ xét duyệt.");
         return "redirect:/verify-student-form";
+    }
+
+
+    @GetMapping("/profile")
+    public String showProfile(Model model, Authentication authentication) {
+        OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+        String email = oauth2User.getAttribute("email");
+
+        User user = userService.findByEmail(email);
+        model.addAttribute("user", user);
+
+        return "user/profile";
     }
 
 }

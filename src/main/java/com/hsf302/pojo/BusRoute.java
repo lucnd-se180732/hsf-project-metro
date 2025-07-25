@@ -32,12 +32,6 @@ public class BusRoute {
     private Boolean isActive = true;
 
 
-
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "bus_route_stops", joinColumns = @JoinColumn(name = "bus_route_id"))
-    @Column(name = "stop_name", columnDefinition = "NVARCHAR(255)")
-    private List<String> stops = new ArrayList<>();
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt = new Date();
 

@@ -1,5 +1,6 @@
 package com.hsf302.config;
 
+import com.hsf302.enums.Role;
 import com.hsf302.enums.TicketType;
 import com.hsf302.pojo.*;
 import com.hsf302.repository.*;
@@ -28,8 +29,27 @@ public class SampleDataConfig implements CommandLineRunner {
     @Autowired
     private BusRouteRepository busRouteRepository;
 
+    @Autowired
+    private StationBusRouteRepository stationBusRouteRepository;
+
+    @Autowired
+    private FareMatrixRepository fareRepo;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public void run(String... args) throws Exception {
+
+        if (!userRepository.existsByEmail(("imquocvu1@gmail.com"))) {
+            User user = new User();
+            user.setEmail("imquocvu1@gmail.com");
+            user.setRole(Role.ADMIN);
+            userRepository.save(user);
+        }
+
+
+
         if (routeRepository.count() > 0) return;
         // 1. Tạo tuyến
         Route route1 = new Route();
@@ -82,6 +102,40 @@ public class SampleDataConfig implements CommandLineRunner {
             busRouteRepository.saveAll(busRoutes);
         }
 
+        List<StationBusRoute> stationBusRoutes = List.of(
+                new StationBusRoute(getStation(6L), getBusRoute(1L), 250, 3),
+                new StationBusRoute(getStation(7L), getBusRoute(1L), 10, 1),
+                new StationBusRoute(getStation(8L), getBusRoute(2L), 20, 1),
+                new StationBusRoute(getStation(7L), getBusRoute(2L), 100, 2),
+                new StationBusRoute(getStation(1L), getBusRoute(3L), 30, 1),
+                new StationBusRoute(getStation(2L), getBusRoute(3L), 40, 1),
+                new StationBusRoute(getStation(1L), getBusRoute(4L), 30, 1),
+                new StationBusRoute(getStation(2L), getBusRoute(4L), 50, 1),
+                new StationBusRoute(getStation(5L), getBusRoute(5L), 60, 1),
+                new StationBusRoute(getStation(6L), getBusRoute(5L), 50, 1),
+                new StationBusRoute(getStation(5L), getBusRoute(6L), 20, 1),
+                new StationBusRoute(getStation(4L), getBusRoute(7L), 150, 2),
+                new StationBusRoute(getStation(4L), getBusRoute(8L), 150, 2),
+                new StationBusRoute(getStation(5L), getBusRoute(9L), 20, 1),
+                new StationBusRoute(getStation(10L), getBusRoute(10L), 40, 1),
+                new StationBusRoute(getStation(11L), getBusRoute(10L), 30, 1),
+                new StationBusRoute(getStation(10L), getBusRoute(11L), 40, 1),
+                new StationBusRoute(getStation(13L), getBusRoute(12L), 15, 1),
+                new StationBusRoute(getStation(14L), getBusRoute(12L), 300, 4),
+                new StationBusRoute(getStation(12L), getBusRoute(13L), 10, 1),
+                new StationBusRoute(getStation(14L), getBusRoute(14L), 350, 5),
+                new StationBusRoute(getStation(12L), getBusRoute(15L), 10, 1),
+                new StationBusRoute(getStation(11L), getBusRoute(16L), 60, 1),
+                new StationBusRoute(getStation(10L), getBusRoute(17L), 40, 1),
+                new StationBusRoute(getStation(3L), getBusRoute(3L), 350, 6),
+                new StationBusRoute(getStation(5L), getBusRoute(8L), 20, 1),
+                new StationBusRoute(getStation(13L), getBusRoute(14L), 15, 1),
+                new StationBusRoute(getStation(10L), getBusRoute(16L), 40, 1)
+        );
+        stationBusRouteRepository.saveAll(stationBusRoutes);
+
+
+
 
 
 
@@ -124,6 +178,30 @@ public class SampleDataConfig implements CommandLineRunner {
                 newTicketConfig(TicketType.STUDENT_MONTHLY, BigDecimal.valueOf(150000), "Vé tháng sinh viên (Giảm 50%)", "Chỉ áp dụng với sinh viên, hiệu lực 1 tháng kể từ ngày kích hoạt")
         };
         ticketConfigRepository.saveAll(Arrays.asList(configs));
+
+
+
+        if (fareRepo.count() == 0) {
+            String[] stationsExac = {
+                    "Bến Thành", "Nhà Hát Thành Phố", "Ba Son", "Văn Thánh",
+                    "Tân Cảng", "Thảo Điền", "An Phú", "Rạch Chiếc",
+                    "Phước Long", "Bình Thái", "Thủ Đức", "Khu Công Nghệ Cao",
+                    "Suối Tiên", "Bến Xe Miền Đông mới"
+            };
+
+            int baseFare = 8000;
+            int fareStep = 1000;
+
+            for (int i = 0; i < stationsExac.length; i++) {
+                for (int j = 0; j < stationsExac.length; j++) {
+                    if (i != j) {
+                        int distance = Math.abs(i - j);
+                        int fare = baseFare + distance * fareStep;
+                        fareRepo.save(new FareMatrix(stationsExac[i], stationsExac[j], fare));
+                    }
+                }
+            }
+        }
     }
 
     // Helper tạo station
@@ -169,6 +247,16 @@ public class SampleDataConfig implements CommandLineRunner {
         route.setCreatedAt(now);
         route.setUpdatedAt(now);
         return route;
+    }
+
+    private Station getStation(Long id) {
+        return stationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Station ID " + id + " not found"));
+    }
+
+    private BusRoute getBusRoute(Long id) {
+        return busRouteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("BusRoute ID " + id + " not found"));
     }
 
 }

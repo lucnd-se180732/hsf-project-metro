@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>Hồ sơ cá nhân</title>
+    <th:block layout:fragment="styles">
+        <style>
+            .profile-container {
+                max-width: 800px;
+                margin: 2rem auto;
+                padding: 2rem;
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+
+            .profile-header {
+                margin-bottom: 2rem;
+                text-align: center;
+            }
+
+            .profile-field {
+                margin-bottom: 1.5rem;
+            }
+
+            .profile-label {
+                font-weight: bold;
+                color: #003B73;
+            }
+
+            .profile-value {
+                font-size: 1.1rem;
+                margin-left: 0.5rem;
+            }
+        </style>
+    </th:block>
+</head>
+
+<body>
+<main layout:fragment="content">
+    <div class="container profile-container">
+        <div class="profile-header">
+            <h2>Thông tin hồ sơ</h2>
+        </div>
+
+        <div class="profile-field">
+            <span class="profile-label">Họ tên:</span>
+            <span class="profile-value" th:text="${user.fullName}">Nguyễn Văn A</span>
+        </div>
+
+        <div class="profile-field">
+            <span class="profile-label">Email:</span>
+            <span class="profile-value" th:text="${user.email}">example@email.com</span>
+        </div>
+
+        <div class="profile-field">
+            <span class="profile-label">Loại tài khoản:</span>
+            <span class="profile-value" th:text="${user.student} ? 'Học sinh / Sinh viên' : 'Cá nhân'"></span>
+        </div>
+    </div>
+</main>
+</body>
+</html>

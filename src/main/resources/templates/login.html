@@ -50,6 +50,9 @@
   <div class="text-center mb-4">
     <h3 class="text-primary fw-bold">Đăng nhập hệ thống Metro</h3>
     <p class="text-muted mb-0" th:if="${param.error}">Đăng nhập thất bại, vui lòng thử lại!</p>
+    <div th:if="${param.error != null and param.error.contains('disabled')}" class="alert alert-danger">
+      Tài khoản của bạn đã bị vô hiệu hóa. Vui lòng liên hệ quản trị viên.
+    </div>
   </div>
   <div class="d-grid">
     <a href="/oauth2/authorization/google" class="google-btn">

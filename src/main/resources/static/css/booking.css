@@ -470,3 +470,10 @@ body::before {
         flex-direction: column;
     }
 }
+
+.departure-list a {
+    color: #0090db;
+}
+.destination-list a {
+    color: #0090db;
+}
