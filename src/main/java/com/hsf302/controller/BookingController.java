@@ -5,6 +5,7 @@ import com.hsf302.pojo.*;
 import com.hsf302.repository.StationRepository;
 import com.hsf302.repository.TicketConfigRepository;
 import com.hsf302.service.interfaces.FareService;
+import com.hsf302.service.interfaces.StationService;
 import com.hsf302.service.interfaces.TicketService;
 import com.hsf302.service.interfaces.PaymentService;
 import jakarta.servlet.http.HttpSession;
@@ -22,10 +23,10 @@ import java.util.List;
 @RequestMapping("/booking")
 @RequiredArgsConstructor
 public class BookingController {
+
     @Autowired
-    private  StationRepository stationRepository;
-    @Autowired
-    private TicketConfigRepository ticketConfigRepository;
+    private StationService stationService;
+
     @Autowired
     private PaymentService paymentService;
     @Autowired
@@ -62,14 +63,14 @@ public class BookingController {
 
     @GetMapping("/single")
     public String chooseDepartureStation(Model model) {
-        List<Station> stations = stationRepository.findAll();
+        List<Station> stations = stationService.getAll();
         model.addAttribute("stations", stations);
         return "booking/single-from";
     }
 
     @GetMapping("/single/from/{stationId}")
     public String chooseArrivalStation(@PathVariable Long stationId, Model model) {
-        Station fromStation = stationRepository.findById(stationId).orElse(null);
+        Station fromStation = stationService.getById(stationId);
         if (fromStation == null) return "redirect:/booking/single";
 
         List<Station> destinations = fromStation.getRoute()
@@ -120,8 +121,8 @@ public class BookingController {
             @RequestParam String to,
             Model model) {
 
-        Station departure = stationRepository.findByName(from);
-        Station arrival = stationRepository.findByName(to);
+        Station departure = stationService.findByName(from);
+        Station arrival = stationService.findByName(to);
 
         if (departure == null || arrival == null) {
             throw new RuntimeException("Không tìm thấy trạm.");

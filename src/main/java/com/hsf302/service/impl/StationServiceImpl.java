@@ -39,20 +39,15 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public StationResponseDto getById(Long id) {
-        return stationMapper.toDto(
-                stationRepository.findById(id)
-                        .orElseThrow(() -> new RuntimeException("Station not found"))
-        );
+    public Station getById(Long id) {
+        return stationRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<StationResponseDto> getAll() {
-        return stationRepository.findAll()
-                .stream()
-                .map(stationMapper::toDto)
-                .toList();
+    public List<Station> getAll() {
+        return stationRepository.findAll();
     }
+
 
     @Override
     public Station findByName(String name) {

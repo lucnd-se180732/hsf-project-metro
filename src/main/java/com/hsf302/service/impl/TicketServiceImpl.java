@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -98,5 +99,15 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public Page<Ticket> getTicketsByUser(User user, Pageable pageable) {
         return ticketRepository.findByUserAndCreatedAtIsNotNull(user, pageable);
+    }
+
+    @Override
+    public Ticket saveTicket(Ticket ticket) {
+       return ticketRepository.save(ticket);
+    }
+
+    @Override
+    public Optional<Ticket> getTicketById(Long ticketId) {
+        return ticketRepository.findById(ticketId);
     }
 }

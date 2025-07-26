@@ -14,6 +14,6 @@ public interface StationService {
     StationResponseDto create(StationRequestDto dto);
     StationResponseDto update(Long id, StationRequestDto dto);
     void delete(Long id);
-    StationResponseDto getById(Long id);
-    List<StationResponseDto> getAll();
+    Station getById(Long id);
+    List<Station> getAll();
 }

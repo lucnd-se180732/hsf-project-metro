@@ -6,6 +6,8 @@ import com.hsf302.repository.StationRepository;
 import com.hsf302.repository.TicketRepository;
 import com.hsf302.service.interfaces.PaymentService;
 import com.hsf302.Utility.QRUtil;
+import com.hsf302.service.interfaces.StationService;
+import com.hsf302.service.interfaces.TicketService;
 import com.hsf302.service.interfaces.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpSession;
@@ -31,9 +33,9 @@ public class PaymentController {
     @Autowired
     private  PaymentService vnPayService;
     @Autowired
-    private  StationRepository stationRepository;
+    private StationService stationService;
     @Autowired
-    private  TicketRepository ticketRepository;
+    private TicketService ticketService;
     @Autowired
     private  EntityManager entityManager;
     @Autowired
@@ -67,8 +69,8 @@ public class PaymentController {
             ticket.setStartDate(java.time.LocalDateTime.now());
             ticket.setEndDate(java.time.LocalDateTime.now().plusDays(30));
 
-            Station departure = stationRepository.findByName(from);
-            Station arrival = stationRepository.findByName(to);
+            Station departure = stationService.findByName(from);
+            Station arrival = stationService.findByName(to);
             Route route = departure.getRoute();
 
             ticket.setDepartureStation(from);
@@ -90,7 +92,7 @@ public class PaymentController {
         }
 
         // ✅ Lưu vào DB trước để có ticketId
-        Ticket savedTicket = ticketRepository.save(ticket);
+        Ticket savedTicket = ticketService.saveTicket(ticket);
 
         // 💾 (Tuỳ chọn) giữ vé trong session nếu cần dùng lại sau
         session.setAttribute("pendingTicket", savedTicket);
@@ -117,7 +119,7 @@ public class PaymentController {
         }
 
         // ✅ Load lại vé từ DB (đảm bảo dữ liệu mới nhất)
-        Optional<Ticket> optionalTicket = ticketRepository.findById(sessionTicket.getId());
+        Optional<Ticket> optionalTicket = ticketService.getTicketById (sessionTicket.getId());
         if (optionalTicket.isEmpty()) {
             return "redirect:/booking/failed";
         }
@@ -142,7 +144,7 @@ public class PaymentController {
                 updated = true;
             }
             if (updated) {
-                ticketRepository.save(freshTicket);
+               ticketService.saveTicket(freshTicket);
             }
 
             return "redirect:/booking/success";
@@ -151,7 +153,7 @@ public class PaymentController {
         // ✅ Trường hợp thanh toán lần đầu - gán dữ liệu
         freshTicket.setQrCode(qrCodeBase64);
         freshTicket.setCreatedAt(LocalDateTime.now());
-        ticketRepository.save(freshTicket);
+        ticketService.saveTicket(freshTicket);
 
         return "redirect:/booking/success";
     }

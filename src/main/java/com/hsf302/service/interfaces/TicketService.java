@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public interface TicketService {
     Ticket previewTicket(TicketType type);
@@ -15,4 +16,6 @@ public interface TicketService {
     boolean validateStations(String from, String to);
     Ticket createTicket(TicketType type, User user);  // Add this method
     Page<Ticket> getTicketsByUser(User user, Pageable pageable);
+    Ticket saveTicket(Ticket ticket);
+    Optional<Ticket> getTicketById(Long ticketId);
 }
