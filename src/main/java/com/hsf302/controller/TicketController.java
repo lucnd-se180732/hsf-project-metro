@@ -4,6 +4,7 @@ import com.hsf302.enums.TicketType;
 import com.hsf302.pojo.Ticket;
 import com.hsf302.pojo.User;
 import com.hsf302.repository.TicketRepository;
+import com.hsf302.service.interfaces.TicketService;
 import com.hsf302.service.interfaces.UserService;
 import com.hsf302.Utility.QRUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ import java.util.Optional;
 public class TicketController {
 
     @Autowired
-    private TicketRepository ticketRepository;
+    private TicketService ticketService;
 
     @Autowired
     private QRUtil qrUtil;
@@ -52,7 +53,7 @@ public class TicketController {
         String email = principal.getName();
         User user = userService.findByEmail(email);
 
-        List<Ticket> allTickets = ticketRepository.findByUser(user);
+        List<Ticket> allTickets = ticketService.getTicketsByUser(user, PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"))).getContent();
         List<Ticket> filtered = new ArrayList<>();
 
         LocalDateTime now = LocalDateTime.now();
@@ -64,7 +65,7 @@ public class TicketController {
             if (ticket.getQrCode() == null || ticket.getQrCode().isEmpty()) {
                 String qr = qrUtil.generate("TICKET#" + ticket.getId());
                 ticket.setQrCode(qr);
-                ticketRepository.save(ticket);
+                ticketService.saveTicket(ticket);
             }
 
             // 👉 Tự động kích hoạt nếu quá thời gian
@@ -82,7 +83,7 @@ public class TicketController {
 
                 if (shouldActivate) {
                     ticket.activate();
-                    ticketRepository.save(ticket);
+                   ticketService.saveTicket(ticket);
                 }
             }
 
@@ -133,13 +134,13 @@ public class TicketController {
         String email = principal.getName();
         User user = userService.findByEmail(email);
 
-        Optional<Ticket> optionalTicket = ticketRepository.findById(id);
+        Optional<Ticket> optionalTicket = ticketService.getTicketById(id);
 
         if (optionalTicket.isPresent()) {
             Ticket ticket = optionalTicket.get();
             if (ticket.getUser().getId().equals(user.getId()) && ticket.getActivatedAt() == null) {
                 ticket.activate(); // bạn đã có hàm activate()
-                ticketRepository.save(ticket);
+                ticketService.saveTicket(ticket);
             }
         }
 
@@ -156,7 +157,7 @@ public class TicketController {
 
         try {
             Long ticketId = Long.parseLong(code.substring(7));
-            Optional<Ticket> optionalTicket = ticketRepository.findById(ticketId);
+            Optional<Ticket> optionalTicket = ticketService.getTicketById(ticketId);
 
             if (optionalTicket.isEmpty()) {
                 model.addAttribute("status", "❌ Không tìm thấy vé.");
@@ -182,7 +183,7 @@ public class TicketController {
 
                     if (ticket.getTicketType() == TicketType.SINGLE) {
                         ticket.setUsed(true);
-                        ticketRepository.save(ticket);
+                        ticketService.saveTicket(ticket);
                     }
                 }
             }

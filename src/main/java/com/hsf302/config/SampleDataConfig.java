@@ -189,7 +189,7 @@ public class SampleDataConfig implements CommandLineRunner {
                     "Suối Tiên", "Bến Xe Miền Đông mới"
             };
 
-            int baseFare = 8000;
+            int baseFare = 10000;
             int fareStep = 1000;
 
             for (int i = 0; i < stationsExac.length; i++) {
